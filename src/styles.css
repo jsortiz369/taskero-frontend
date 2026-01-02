@@ -1,7 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
-
-:root {
-  --primary-color: #0ea5e9; /* sky-500 */
-}
+@import './assets/layout.css';
+@import 'primeicons/primeicons.css';

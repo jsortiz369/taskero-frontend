@@ -1,0 +1,124 @@
+@let fullScreen = cardFullScreen();
+<app-floating />
+
+<div 
+    class="grid place-items-center"
+    [ngClass]="fullScreen ? '': 'p-5'"
+>
+    <p-card
+        header=""
+        class="p-12"
+        [style]="fullScreen ? {width: '100%', height: '100%'} : { width: '30rem' }"
+    >
+        <ng-template #header>
+            <div class="text-center mt-5 flex flex-col justify-center gap-2">
+                <a class="flex items-center gap-3 justify-center cursor-pointer" routerLink="/">
+                    <img src="icon.png" class="w-14">
+                    <span class="text-6xl"> Taskero </span>
+                </a>
+                <div class="text-lg font-bold">Regístrese para continuar</div>
+            </div>
+        </ng-template>
+        
+        
+        <form class="w-full flex flex-wrap gap-4 py-5" autocomplete="off" [formGroup]="_formRegister$" (ngSubmit)="register()">
+            <div class="w-full flex flex-col gap-1">
+                <label for="names">Nombres <span class="text-red-500">*</span>:</label>
+                <input 
+                    pInputText 
+                    id="names"
+                    placeholder="Ingrese sus nombres"
+                    autocomplete="one-time-code"
+                    pSize="large"
+                    formControlName="names"
+                />
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+                <label for="surnames">Apellidos <span class="text-red-500">*</span>:</label>
+                <input 
+                    pInputText 
+                    id="surnames"
+                    placeholder="Ingrese sus apellidos"
+                    autocomplete="one-time-code"
+                    pSize="large"
+                />
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+                <label for="birthday">Fecha de nacimiento <span class="text-red-500">*</span>:</label>
+                <input 
+                    pInputText 
+                    id="birthday"
+                    placeholder="Ingrese su fecha de nacimiento"
+                    autocomplete="one-time-code"
+                    pSize="large"
+                />
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+                <label for="username">Correo <span class="text-red-500">*</span>:</label>
+                <input 
+                    pInputText 
+                    id="username"
+                    placeholder="Ingrese su correo electrónico"
+                    autocomplete="one-time-code"
+                    pSize="large"
+                />
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+                <label for="password">Contraseña <span class="text-red-500">*</span>:</label>
+                <input 
+                    pInputText 
+                    id="password"
+                    placeholder="Ingrese una contraseña"
+                    autocomplete="one-time-code"
+                    pSize="large"
+                />
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+                <label for="password-confirm">Confirmar contraseña <span class="text-red-500">*</span>:</label>
+                <input 
+                    pInputText 
+                    id="password-confirm"
+                    placeholder="Confirmar su contraseña"
+                    autocomplete="one-time-code"
+                    pSize="large"
+                />
+            </div>
+
+            <div class="w-full">
+                <p-button
+                    type="submit"
+                    label="Registrarse"
+                    size="large"
+                    fluid
+                />
+            </div>
+
+            <hr class="w-full border-gray-300">
+
+            <div> ¿Ya tienes una cuenta de Taskero? <a routerLink="/auth/login" class="text-(--primary-color) cursor-pointer underline!">Iniciar sesión</a></div>
+        </form>
+    </p-card>
+</div>
+
+<!--  <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
+    <div class="flex flex-col items-center justify-center">
+        <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
+            <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20" style="border-radius: 53px">
+                <div class="text-center mb-8">
+                    icon
+                    <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Welcome to PrimeLand!</div>
+                    <span class="text-muted-color font-medium">Sign in to continue</span>
+                </div>
+
+                <div>
+                    content
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

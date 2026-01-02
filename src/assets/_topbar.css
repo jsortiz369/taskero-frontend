@@ -1,0 +1,102 @@
+.layout-topbar {
+  position: fixed;
+  z-index: 997;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 0 2rem;
+  background-color: var(--surface-card);
+  transition: left var(--layout-section-transition-duration);
+  align-items: center;
+}
+
+.layout-topbar .layout-topbar-container {
+  z-index: 997;
+  position: relative;
+  padding: 0 1rem;
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  height: 60px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+
+.layout-topbar-container .layout-topbar-logo {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.5rem;
+  border-radius: var(--content-border-radius);
+  color: var(--text-color);
+  font-weight: 500;
+  gap: 0.5rem;
+}
+
+.layout-topbar-container .layout-topbar-logo-container {
+  width: 12rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.layout-topbar-container .layout-topbar-action {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color-secondary);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--text-color);
+  transition: background-color var(--element-transition-duration);
+  cursor: pointer;
+}
+
+.layout-topbar-container .layout-topbar-action:hover {
+  background-color: var(--surface-hover);
+}
+
+.layout-topbar-container .layout-topbar-action:focus-visible {
+  outline-width: var(--focus-ring-width);
+  outline-style: var(--focus-ring-style);
+  outline-color: var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  box-shadow: var(--focus-ring-shadow);
+  transition: box-shadow var(--transition-duration), outline-color var(--transition-duration);
+}
+
+.layout-topbar-container .layout-topbar-action i {
+  font-size: 1.25rem;
+}
+
+.layout-topbar-container .layout-topbar-action span {
+  font-size: 1rem;
+  display: none;
+}
+
+.layout-topbar-container .layout-topbar-action .layout-topbar-action-highlight {
+  background-color: var(--primary-color);
+  color: var(--primary-contrast-color);
+}
+
+.layout-topbar-container .layout-menu-button {
+  margin-right: 0.5rem;
+}
+
+.layout-topbar-container .layout-topbar-menu-button {
+  display: none;
+}
+
+.layout-topbar-container .layout-topbar-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 20rem;
+  justify-content: end;
+}
+
+.layout-topbar-container .layout-config-menu {
+  display: flex;
+  gap: 0.5rem;
+}
