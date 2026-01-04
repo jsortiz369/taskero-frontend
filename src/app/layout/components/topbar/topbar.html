@@ -13,7 +13,7 @@
 					<i class="pi" [ngClass]=" _layoutService$.darkMode$() ? 'pi-moon' : 'pi-sun'"></i>
 				</button>
 				
-				@if(_layoutService$.showMenu$()) {
+				@if(!_layoutService$.showMenu$()) {
 					<p-button
 						severity="contrast"
 						routerLink="/auth/login"

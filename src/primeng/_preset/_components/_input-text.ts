@@ -1,4 +1,6 @@
-export const _INPUT_TEXT = {
+import { InputTextDesignTokens } from '@primeuix/themes/types/inputtext';
+
+export const _INPUT_TEXT: InputTextDesignTokens = {
   root: {
     background: '{form.field.background}',
     disabledBackground: '{form.field.disabled.background}',
@@ -8,11 +10,11 @@ export const _INPUT_TEXT = {
     borderColor: '{form.field.border.color}',
     hoverBorderColor: '{form.field.hover.border.color}',
     focusBorderColor: '{form.field.focus.border.color}',
-    invalidBorderColor: '{form.field.invalid.border.color}',
     color: '{form.field.color}',
     disabledColor: '{form.field.disabled.color}',
     placeholderColor: '{form.field.placeholder.color}',
     invalidPlaceholderColor: '{form.field.invalid.placeholder.color}',
+    invalidBorderColor: '{form.field.invalid.border.color}',
     shadow: '{form.field.shadow}',
     paddingX: '{form.field.padding.x}',
     paddingY: '{form.field.padding.y}',

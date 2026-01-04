@@ -1,4 +1,4 @@
-export const primitive = {
+export const _PRIMITIVE = {
   borderRadius: {
     none: '0',
     xs: '0.125rem',

@@ -21,7 +21,7 @@ export class Topbar implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._layoutService$.toggleMenu();
+    if (this._layoutService$.showMenu$()) this._layoutService$.toggleMenu();
   }
 
   @HostListener('window:resize', ['$event'])

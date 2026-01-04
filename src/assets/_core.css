@@ -22,3 +22,7 @@ a {
 .layout-wrapper {
   min-height: 100dvh;
 }
+
+*:disabled {
+  cursor: not-allowed;
+}

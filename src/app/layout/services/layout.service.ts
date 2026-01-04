@@ -25,10 +25,10 @@ export class LayoutService {
   onResize(event?: any) {
     const width = event?.target?.innerWidth ?? window.innerWidth;
     if (width < 768) {
-      this.showMenu.set(false);
-    } else {
       this.showMenu.set(true);
       this.visibleMenu.set(false);
+    } else {
+      this.showMenu.set(false);
     }
 
     this.validateMenu();
@@ -50,6 +50,6 @@ export class LayoutService {
   }
 
   private validateMenu() {
-    document.body.style.overflow = this.visibleMenu() ? 'hidden' : 'auto';
+    document.body.style.overflow = this.showMenu() && this.visibleMenu() ? 'hidden' : 'auto';
   }
 }

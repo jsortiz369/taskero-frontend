@@ -1,7 +1,9 @@
-import { Directive, ElementRef, inject, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Directive, ElementRef, inject, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { NgControl } from '@angular/forms';
+import { EMPTY, fromEvent, merge, Subject, takeUntil } from 'rxjs';
+
 import { SubmitFormReactive } from '../submit-form-reactive/submit-form-reactive';
-import { EMPTY, fromEvent, merge, shareReplay, Subject, takeUntil } from 'rxjs';
+import { ControlMessageError } from '../../components/control-message-error/control-error.component';
 
 @Directive({
   selector: '[formControl], [formControlName]',
@@ -15,18 +17,83 @@ export class ControlFormReactive implements OnInit, OnDestroy {
   private readonly submit$ = this.form ? this.form.submit$ : EMPTY;
   private readonly focusoutEvent$ = fromEvent(this.elementRef.nativeElement, 'focusout');
 
+  // datepicker
+
+  private componentRef!: ComponentRef<ControlMessageError>;
+
   constructor() {}
 
   ngOnInit(): void {
     merge(this.submit$, this.focusoutEvent$, this.ngControl.statusChanges!)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        console.log(this.ngControl);
-      });
+      .subscribe(() => this.validatorsErrors());
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private validatorsErrors() {
+    const messageError = this.ControlErros();
+    if (!this.componentRef) this.componentRef = this.vcr.createComponent(ControlMessageError);
+    this.componentRef.setInput('text', messageError);
+
+    // add classes to element invalid
+    const parentElement: HTMLElement | null = this.elementRef.nativeElement;
+    const elementRef = parentElement.tagName !== 'INPUT' ? parentElement.querySelector('input') : parentElement;
+    if (messageError) elementRef?.classList.add('ng-invalid', 'ng-touched', 'ng-dirty');
+    else elementRef?.classList.remove('ng-invalid');
+
+    // append element message
+    let appendNode: ParentNode | null | undefined = null;
+    const float = parentElement.parentElement?.classList.contains('p-float-label');
+    if (float) {
+      const group = parentElement.parentElement?.parentElement?.parentElement;
+      if (group?.classList.contains('p-inputgroup')) appendNode = group.parentNode?.parentNode;
+      else appendNode = group?.parentNode;
+    } else {
+      appendNode = parentElement.parentNode;
+    }
+
+    if (appendNode) appendNode.appendChild(this.componentRef.location.nativeElement);
+  }
+
+  private ControlErros(): string | null {
+    const controlErros = this.ngControl.errors ?? {};
+    const [key, value] = Object.entries(controlErros)[0] ?? [null, null];
+    if (!value) return null;
+
+    if (key === 'required') return this.messageRequired(value);
+    if (key === 'pattern') return this.messagePattern(value);
+    if (key === 'minlength') return this.messageMinlength(value);
+    if (key === 'maxlength') return this.messageMaxlength(value);
+    if (key === 'email') return this.messageEmail(value);
+    return value;
+  }
+
+  private messageRequired(message: string | boolean): string {
+    if (['true', true].includes(message)) return 'Campo requerido';
+    return String(message);
+  }
+
+  private messagePattern(message: string | { actualValue: string; requiredPattern: string }): string {
+    if (typeof message !== 'string') return 'El valor ingresado no es válido';
+    return message;
+  }
+
+  private messageMinlength(message: string | { requiredLength: number; actualLength: number }) {
+    if (typeof message !== 'string') return `Valor mínimo ${message.requiredLength} caracteres`;
+    return message;
+  }
+
+  private messageMaxlength(message: string | { requiredLength: number; actualLength: number }) {
+    if (typeof message !== 'string') return `Valor máximo ${message.requiredLength} caracteres`;
+    return message;
+  }
+
+  private messageEmail(message: string | boolean): string {
+    if (['true', true].includes(message)) return 'Correo electrónico no válido';
+    return String(message);
   }
 }

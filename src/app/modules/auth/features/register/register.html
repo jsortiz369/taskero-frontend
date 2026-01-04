@@ -23,7 +23,7 @@
         
         <form class="w-full flex flex-wrap gap-4 py-5" autocomplete="off" [formGroup]="_formRegister$" (ngSubmit)="register()">
             <div class="w-full flex flex-col gap-1">
-                <label for="names">Nombres <span class="text-red-500">*</span>:</label>
+                <app-label label="Nombres" id="names" [required]="true" />
                 <input 
                     pInputText 
                     id="names"
@@ -35,57 +35,102 @@
             </div>
 
             <div class="w-full flex flex-col gap-1">
-                <label for="surnames">Apellidos <span class="text-red-500">*</span>:</label>
+                <app-label label="Apellidos" id="surnames" [required]="true" />
                 <input 
                     pInputText 
                     id="surnames"
                     placeholder="Ingrese sus apellidos"
                     autocomplete="one-time-code"
                     pSize="large"
+                    formControlName="surnames"
                 />
             </div>
 
             <div class="w-full flex flex-col gap-1">
-                <label for="birthday">Fecha de nacimiento <span class="text-red-500">*</span>:</label>
-                <input 
-                    pInputText 
-                    id="birthday"
+                <app-label label="Fecha de nacimiento" id="birthday" [required]="true" />
+                <p-datepicker 
+                    inputId="birthday"
+                    formControlName="birthday"
+                    fluid
+                    size="large"
                     placeholder="Ingrese su fecha de nacimiento"
-                    autocomplete="one-time-code"
-                    pSize="large"
+                    dateFormat="yy-mm-dd"
+                    [readonlyInput]="true"
                 />
             </div>
 
             <div class="w-full flex flex-col gap-1">
-                <label for="username">Correo <span class="text-red-500">*</span>:</label>
-                <input 
+                <app-label label="Telefono" id="phone" [required]="true" />
+                <p-inputmask
+                    inputId="phone"
+                    mask="(+57) 999-9999-999" 
+                    formControlName="phone" 
+                    placeholder="(+57) 999-9999-999"
+                    size="large"
+                    fluid
+                />
+            </div>
+
+            <div class="w-full flex flex-col gap-1">
+                <app-label label="Correo" id="email" [required]="true" />
+                <input
                     pInputText 
-                    id="username"
+                    id="email"
                     placeholder="Ingrese su correo electrónico"
                     autocomplete="one-time-code"
                     pSize="large"
+                    formControlName="email"
                 />
             </div>
 
             <div class="w-full flex flex-col gap-1">
-                <label for="password">Contraseña <span class="text-red-500">*</span>:</label>
-                <input 
-                    pInputText 
-                    id="password"
-                    placeholder="Ingrese una contraseña"
-                    autocomplete="one-time-code"
-                    pSize="large"
-                />
+                <app-label label="Contraseña" id="password" [required]="true" />
+                <p-password 
+                    inputId="password"
+                    formControlName="password" 
+                    promptLabel="Choose a password" 
+                    weakLabel="Too simple" 
+                    mediumLabel="Average complexity" 
+                    strongLabel="Complex password"
+                    [toggleMask]="true"
+                    fluid
+                    size="large"
+                    placeholder="*************"
+                    promptLabel="Ingrese una contraseña"
+                    weakLabel="Contraseña muy debil"
+                    mediumLabel="Contraseña media"
+                    strongLabel="Contraseña fuerte"
+                    [mediumRegex]="_mediumPassword$()"
+                    [strongRegex]="_strongPassword$()"
+                >
+                    <ng-template #header>
+                        <div class="font-semibold text-xm mb-4">Nivel de complejidad</div>
+                    </ng-template>
+
+                    <ng-template #footer>
+                        <p-divider />
+                        <ul class="pl-2 my-0 leading-normal">
+                            <li>Mínimo 8 caracteres</li>
+                            <li>Al menos 1 minúscula</li>
+                            <li>Al menos 1 mayúscula</li>
+                            <li>Al menos 1 número</li>
+                            <li>Al menos 1 carácter especial</li>
+                        </ul>
+                    </ng-template>
+                </p-password>
+                
             </div>
 
             <div class="w-full flex flex-col gap-1">
-                <label for="password-confirm">Confirmar contraseña <span class="text-red-500">*</span>:</label>
-                <input 
-                    pInputText 
-                    id="password-confirm"
-                    placeholder="Confirmar su contraseña"
-                    autocomplete="one-time-code"
-                    pSize="large"
+                <app-label label="Confirmar contraseña" id="passwordConfirm" [required]="true" />
+                <p-password
+                    inputId="passwordConfirm"
+                    formControlName="passwordConfirm"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                    fluid
+                    size="large"
+                    placeholder="*************"
                 />
             </div>
 
@@ -95,6 +140,7 @@
                     label="Registrarse"
                     size="large"
                     fluid
+                    [disabled]="_formRegister$.invalid"
                 />
             </div>
 
@@ -104,21 +150,3 @@
         </form>
     </p-card>
 </div>
-
-<!--  <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
-    <div class="flex flex-col items-center justify-center">
-        <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
-            <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20" style="border-radius: 53px">
-                <div class="text-center mb-8">
-                    icon
-                    <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Welcome to PrimeLand!</div>
-                    <span class="text-muted-color font-medium">Sign in to continue</span>
-                </div>
-
-                <div>
-                    content
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

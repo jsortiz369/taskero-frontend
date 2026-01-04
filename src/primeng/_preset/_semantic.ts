@@ -1,4 +1,4 @@
-export const semantic = {
+export const _SEMANTIC = {
   transitionDuration: '0.2s',
   disabledOpacity: '0.6',
   iconSize: '1rem',
@@ -42,6 +42,25 @@ export const semantic = {
   content: {
     borderRadius: '{border.radius.md}',
   },
+  overlay: {
+    select: {
+      borderRadius: '{border.radius.md}',
+      shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+    },
+    popover: {
+      borderRadius: '{border.radius.md}',
+      padding: '0.938rem',
+      shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+    },
+    modal: {
+      borderRadius: '{border.radius.xl}',
+      padding: '1.25rem',
+      shadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+    },
+    navigation: {
+      shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+    },
+  },
   colorScheme: {
     light: {
       primary: {
@@ -71,6 +90,10 @@ export const semantic = {
         900: '{neutral.900}',
         950: '{neutral.950}',
       },
+      formField: {
+        invalidBorderColor: '{red.500}',
+        invalidPlaceholderColor: '{red.500}',
+      },
     },
     dark: {
       primary: {
@@ -99,6 +122,10 @@ export const semantic = {
         800: '{slate.800}',
         900: '{slate.900}',
         950: '{slate.950}',
+      },
+      formField: {
+        invalidBorderColor: '{orange.500}',
+        invalidPlaceholderColor: '{orange.500}',
       },
     },
   },
