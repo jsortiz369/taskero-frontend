@@ -14,6 +14,8 @@ import { AppModule } from '../../../../app.module';
 import { REGEX } from '../../../../shared/constants/regex';
 import { ValidatorReactive } from '../../../../shared/utils/validator-reactive';
 import { Label } from '../../../../shared/components/label/label';
+import { existEmail, existPhone } from '../../utils/register-validators';
+import { Auth } from '../../services';
 
 const VALIDATOR = [
   ValidatorReactive.required(),
@@ -30,6 +32,7 @@ const VALIDATOR = [
 })
 export class Register implements OnInit {
   private readonly _fb$ = inject(FormBuilder);
+  private readonly _auth$ = inject(Auth);
 
   protected readonly _mediumPassword$ = signal<string>(this.stringRegex(REGEX.MEDIUM_PASSWORD)).asReadonly();
   protected readonly _strongPassword$ = signal<string>(this.stringRegex(REGEX.STRONG_PASSWORD)).asReadonly();
@@ -40,8 +43,12 @@ export class Register implements OnInit {
       names: this._fb$.nonNullable.control('', [...VALIDATOR]),
       surnames: this._fb$.nonNullable.control('', [...VALIDATOR]),
       birthday: this._fb$.nonNullable.control(undefined as unknown as Date, ValidatorReactive.required()),
-      phone: this._fb$.nonNullable.control('', ValidatorReactive.required()),
-      email: this._fb$.nonNullable.control('', [ValidatorReactive.required(), ValidatorReactive.email()]),
+      phone: this._fb$.nonNullable.control('', ValidatorReactive.required(), existPhone(this._auth$)),
+      email: this._fb$.nonNullable.control(
+        '',
+        [ValidatorReactive.required(), ValidatorReactive.minLength(5), ValidatorReactive.email(), ValidatorReactive.maxLength(100)],
+        [existEmail(this._auth$)],
+      ),
       password: this._fb$.nonNullable.control('', [ValidatorReactive.required(), ValidatorReactive.minLength(8)]),
       passwordConfirm: this._fb$.nonNullable.control(''),
     },

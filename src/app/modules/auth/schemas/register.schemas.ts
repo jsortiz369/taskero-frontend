@@ -1,18 +1,12 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RegisterModel } from '../models/register.model';
+import z from 'zod';
 
-/* export const NAMES = new FormControl('', { validators: Validators.required, nonNullable: true });
-export const SURNAME = new FormControl('', { validators: Validators.required, nonNullable: true });
-
-export const registerSchema = new FormGroup<RegisterModel>({
-    names: NAMES,
-    surnames: SURNAME,
-    birthday: this._fb$.nonNullable.control(undefined as unknown as Date, [Validators.required]),
-    phone: this._fb$.nonNullable.control('', [Validators.required]),
-    email: this._fb$.nonNullable.control('', [
-      Validators.required,
-      Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
-    ]),
-    password: this._fb$.nonNullable.control('', [Validators.required]),
-    passwordConfirm: this._fb$.nonNullable.control('', [Validators.required]),
-  }); */
+export const registerValidators = z
+  .object(
+    {
+      exist: z.boolean({ error: 'El valor de exist debe ser un booleano' }).nonoptional({ error: 'El valor de exit es requerido' }),
+    },
+    {
+      error: (issue) => ({ message: `llaves no reconocidas: "${(issue.keys as string[]).join('", "')}"` }),
+    },
+  )
+  .strict();

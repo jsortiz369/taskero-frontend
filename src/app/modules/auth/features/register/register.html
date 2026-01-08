@@ -60,7 +60,7 @@
             </div>
 
             <div class="w-full flex flex-col gap-1">
-                <app-label label="Telefono" id="phone" [required]="true" />
+                <app-label label="Teléfono" id="phone" [required]="true" />
                 <p-inputmask
                     inputId="phone"
                     mask="(+57) 999-9999-999" 
@@ -140,7 +140,7 @@
                     label="Registrarse"
                     size="large"
                     fluid
-                    [disabled]="_formRegister$.invalid"
+                    [disabled]="!_formRegister$.valid"
                 />
             </div>
 
