@@ -2,6 +2,6 @@ import { Environment } from './_environment.interface';
 
 export const environment: Environment = {
   production: false,
-  urlBase: 'http://localhost:8000/api/v1',
+  urlBase: 'http://192.168.1.61:8000/api/v1',
   timeRequest: 1500,
 };

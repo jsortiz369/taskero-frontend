@@ -5,6 +5,7 @@ import { _CARD } from './_card';
 import { _DATE_PICKER } from './_date-picker';
 import { _INPUT_TEXT } from './_input-text';
 import { _PASSWORD } from './_password';
+import { _TOAST } from './_toast';
 
 export const _COMPONENTS: ComponentsDesignTokens = {
   button: _BUTTON,
@@ -12,4 +13,5 @@ export const _COMPONENTS: ComponentsDesignTokens = {
   datepicker: _DATE_PICKER,
   inputtext: _INPUT_TEXT,
   password: _PASSWORD,
+  toast: _TOAST,
 };

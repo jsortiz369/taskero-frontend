@@ -1,0 +1,58 @@
+<p-toast
+    (onClose)="onclose($event)"
+    [position]="position()"
+>
+    <ng-template 
+        let-message
+        let-closeFn="closeFn"
+        #headless
+    >   
+        <div 
+            class="p-toast-message-content" 
+            (mouseenter)="onPause(message)"
+            (mouseleave)="onResume(message)"
+        >
+            <div class="py-3">
+                @if(message.icon) {
+                    <i class="pi {{message.icon}} p-toast-message-icon"></i>
+                }@else {
+                    @if(message.severity === 'info'){
+                        <svg viewBox="0 0 24 24" width="100%" height="100%" class="p-toast-message-icon p-icon" fill="var(--p-toast-info-color)">
+                            <path d="M12 0a12 12 0 1012 12A12.013 12.013 0 0012 0zm.25 5a1.5 1.5 0 11-1.5 1.5 1.5 1.5 0 011.5-1.5zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75a.25.25 0 00.25.25h.75a1 1 0 110 2z"></path>
+                        </svg>
+                    }@else if(message.severity === 'success'){
+                        <svg viewBox="0 0 24 24" width="100%" height="100%" class="p-toast-message-icon p-icon" fill="var(--p-toast-success-color)">
+                            <path d="M12 0a12 12 0 1012 12A12.014 12.014 0 0012 0zm6.927 8.2l-6.845 9.289a1.011 1.011 0 01-1.43.188l-4.888-3.908a1 1 0 111.25-1.562l4.076 3.261 6.227-8.451a1 1 0 111.61 1.183z"></path>
+                        </svg>
+                    }@else if(message.severity === 'error'){
+                        <svg viewBox="0 0 24 24" width="100%" height="100%" class="p-toast-message-icon p-icon" fill="var(--p-toast-error-color)">
+                            <path d="M11.983 0a12.206 12.206 0 00-8.51 3.653A11.8 11.8 0 000 12.207 11.779 11.779 0 0011.8 24h.214A12.111 12.111 0 0024 11.791 11.766 11.766 0 0011.983 0zM10.5 16.542a1.476 1.476 0 011.449-1.53h.027a1.527 1.527 0 011.523 1.47 1.475 1.475 0 01-1.449 1.53h-.027a1.529 1.529 0 01-1.523-1.47zM11 12.5v-6a1 1 0 012 0v6a1 1 0 11-2 0z"></path>
+                        </svg>
+                    }@else if(message.severity === 'warn'){
+                        <svg viewBox="0 0 24 24" width="100%" height="100%" class="p-toast-message-icon p-icon" fill="var(--p-toast-warn-color)">
+                            <path d="M23.32 17.191L15.438 2.184C14.728.833 13.416 0 11.996 0c-1.42 0-2.733.833-3.443 2.184L.533 17.448a4.744 4.744 0 000 4.368C1.243 23.167 2.555 24 3.975 24h16.05C22.22 24 24 22.044 24 19.632c0-.904-.251-1.746-.68-2.44zm-9.622 1.46c0 1.033-.724 1.823-1.698 1.823s-1.698-.79-1.698-1.822v-.043c0-1.028.724-1.822 1.698-1.822s1.698.79 1.698 1.822v.043zm.039-12.285l-.84 8.06c-.057.581-.408.943-.897.943-.49 0-.84-.367-.896-.942l-.84-8.065c-.057-.624.25-1.095.779-1.095h1.91c.528.005.84.476.784 1.1z"></path>
+                        </svg>
+                    }
+                }
+            </div>
+
+            <div data-p="info" class="p-toast-message-text py-3 self-center" data-pc-section="messagetext">
+                @if(message.summary) {
+                    <div data-p="info" class="p-toast-summary"> {{message.summary}} </div>
+                }
+
+                @if(message.detail) {
+                    <div data-p="info" class="p-toast-detail">{{message.detail}}</div>
+                }
+            </div>
+
+            <div><button type="button" autofocus="" class="p-toast-close-button" aria-label="Close" data-p="info" data-pc-section="closebutton"><!----><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" data-p-icon="times" class="p-toast-close-icon p-icon" aria-hidden="true" data-pc-section="closeicon" pc1851=""><path d="M8.01186 7.00933L12.27 2.75116C12.341 2.68501 12.398 2.60524 12.4375 2.51661C12.4769 2.42798 12.4982 2.3323 12.4999 2.23529C12.5016 2.13827 12.4838 2.0419 12.4474 1.95194C12.4111 1.86197 12.357 1.78024 12.2884 1.71163C12.2198 1.64302 12.138 1.58893 12.0481 1.55259C11.9581 1.51625 11.8617 1.4984 11.7647 1.50011C11.6677 1.50182 11.572 1.52306 11.4834 1.56255C11.3948 1.60204 11.315 1.65898 11.2488 1.72997L6.99067 5.98814L2.7325 1.72997C2.59553 1.60234 2.41437 1.53286 2.22718 1.53616C2.03999 1.53946 1.8614 1.61529 1.72901 1.74767C1.59663 1.88006 1.5208 2.05865 1.5175 2.24584C1.5142 2.43303 1.58368 2.61419 1.71131 2.75116L5.96948 7.00933L1.71131 11.2675C1.576 11.403 1.5 11.5866 1.5 11.7781C1.5 11.9696 1.576 12.1532 1.71131 12.2887C1.84679 12.424 2.03043 12.5 2.2219 12.5C2.41338 12.5 2.59702 12.424 2.7325 12.2887L6.99067 8.03052L11.2488 12.2887C11.3843 12.424 11.568 12.5 11.7594 12.5C11.9509 12.5 12.1346 12.424 12.27 12.2887C12.4053 12.1532 12.4813 11.9696 12.4813 11.7781C12.4813 11.5866 12.4053 11.403 12.27 11.2675L8.01186 7.00933Z" fill="currentColor"></path></svg><!----></button></div>
+        </div>
+
+        <!-- @if(!message.sticky) { -->
+            <div class="progress-container absolute bottom-0 left-0 right-0">
+                <div class="progress-bar" [style.width.%]="progress()[message.id] || 100"></div>
+            </div>
+        <!-- } -->
+    </ng-template>
+</p-toast>

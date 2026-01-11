@@ -12,11 +12,11 @@ export const existEmail = (authService: Auth): AsyncValidatorFn => {
       switchMap(() =>
         authService.registerValidExistEmail(control.value).pipe(
           map((response: ResponseRegisterExist) => {
-            return response.exist ? { emailExists: 'El correo ya se encuentra registrado' } : null;
+            return response.exist ? { emailExists: 'El correo ya se encuentra registrado.' } : null;
           }),
           catchError((error: HttpErrorResponse | ZodError) => {
             if (!(error instanceof HttpErrorResponse)) error.issues.forEach((issue) => console.log(issue.message));
-            return of({ emailExists: 'El correo ya se encuentra registrado' });
+            return of({ emailExists: 'No se pudo validar el correo.' });
           }),
         ),
       ),
@@ -31,11 +31,11 @@ export const existPhone = (authService: Auth): AsyncValidatorFn => {
         const phone = control.value.replace(/[^0-9+]/g, '');
         return authService.registerValidExistPhone(phone).pipe(
           map((response: ResponseRegisterExist) => {
-            return response.exist ? { phoneExists: 'El teléfono ya se encuentra registrado' } : null;
+            return response.exist ? { phoneExists: 'El teléfono ya se encuentra registrado.' } : null;
           }),
-          catchError((error: HttpErrorResponse) => {
-            console.log(typeof error);
-            return of({ phoneExists: 'El teléfono ya se encuentra registrado' });
+          catchError((error: HttpErrorResponse | ZodError) => {
+            if (!(error instanceof HttpErrorResponse)) error.issues.forEach((issue) => console.log(issue.message));
+            return of({ phoneExists: 'No se pudo validar el teléfono' });
           }),
         );
       }),

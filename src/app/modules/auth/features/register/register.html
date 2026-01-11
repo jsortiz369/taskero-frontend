@@ -1,6 +1,7 @@
 @let fullScreen = cardFullScreen();
 <app-floating />
 
+
 <div 
     class="grid place-items-center"
     [ngClass]="fullScreen ? '': 'p-5'"
@@ -68,6 +69,7 @@
                     placeholder="(+57) 999-9999-999"
                     size="large"
                     fluid
+                    type="tel"
                 />
             </div>
 
@@ -140,8 +142,10 @@
                     label="Registrarse"
                     size="large"
                     fluid
-                    [disabled]="!_formRegister$.valid"
+                    
+                    [loading]="_loaddingRegister$()"
                 />
+                <!-- [disabled]="!_formRegister$.valid" -->
             </div>
 
             <hr class="w-full border-gray-300">
