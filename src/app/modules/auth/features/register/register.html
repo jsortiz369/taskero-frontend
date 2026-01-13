@@ -4,7 +4,7 @@
 
 <div 
     class="grid place-items-center"
-    [ngClass]="fullScreen ? '': 'p-5'"
+    [ngClass]="fullScreen ? '': 'p-3'"
 >
     <p-card
         header=""
@@ -21,12 +21,12 @@
             </div>
         </ng-template>
         
-        
-        <form class="w-full flex flex-wrap gap-4 py-5" autocomplete="off" [formGroup]="_formRegister$" (ngSubmit)="register()">
-            <div class="w-full flex flex-col gap-1">
+        <form class="w-full flex flex-wrap" autocomplete="off" [formGroup]="_formRegister$" (ngSubmit)="register()">
+            <div class="w-full sm:w-6/12 flex flex-col gap-0.5 pr-1 pb-2">
                 <app-label label="Nombres" id="names" [required]="true" />
                 <input 
-                    pInputText 
+                    pInputText
+                    [pKeyFilter]="_textRegex$()"
                     id="names"
                     placeholder="Ingrese sus nombres"
                     autocomplete="one-time-code"
@@ -35,10 +35,11 @@
                 />
             </div>
 
-            <div class="w-full flex flex-col gap-1">
+            <div class="w-full sm:w-6/12 flex flex-col gap-0.5 pl-1 pb-2">
                 <app-label label="Apellidos" id="surnames" [required]="true" />
                 <input 
-                    pInputText 
+                    pInputText
+                    [pKeyFilter]="_textRegex$()"
                     id="surnames"
                     placeholder="Ingrese sus apellidos"
                     autocomplete="one-time-code"
@@ -47,20 +48,21 @@
                 />
             </div>
 
-            <div class="w-full flex flex-col gap-1">
-                <app-label label="Fecha de nacimiento" id="birthday" [required]="true" />
-                <p-datepicker 
-                    inputId="birthday"
-                    formControlName="birthday"
-                    fluid
-                    size="large"
-                    placeholder="Ingrese su fecha de nacimiento"
-                    dateFormat="yy-mm-dd"
-                    [readonlyInput]="true"
+            <div class="w-full flex flex-col gap-0.5 pb-2">
+                <app-label label="Nombre de usuario" id="username" [required]="true" />
+                <input 
+                    pInputText 
+                    [pKeyFilter]="_usernameRegex$()"
+                    id="username" 
+                    class="w-full"
+                    pSize="large"
+                    formControlName="username"
+                    placeholder="Ingrese un nombre de usuario"
+                    autocomplete="one-time-code"
                 />
             </div>
 
-            <div class="w-full flex flex-col gap-1">
+            <div class="w-full flex flex-col gap-0.5 pb-2">
                 <app-label label="Teléfono" id="phone" [required]="true" />
                 <p-inputmask
                     inputId="phone"
@@ -73,7 +75,7 @@
                 />
             </div>
 
-            <div class="w-full flex flex-col gap-1">
+            <div class="w-full flex flex-col gap-0.5 pb-2">
                 <app-label label="Correo" id="email" [required]="true" />
                 <input
                     pInputText 
@@ -85,7 +87,7 @@
                 />
             </div>
 
-            <div class="w-full flex flex-col gap-1">
+            <div class="w-full flex flex-col gap-0.5 pb-2">
                 <app-label label="Contraseña" id="password" [required]="true" />
                 <p-password 
                     inputId="password"
@@ -120,10 +122,9 @@
                         </ul>
                     </ng-template>
                 </p-password>
-                
             </div>
 
-            <div class="w-full flex flex-col gap-1">
+            <div class="w-full flex flex-col gap-0.5 mb-2">
                 <app-label label="Confirmar contraseña" id="passwordConfirm" [required]="true" />
                 <p-password
                     inputId="passwordConfirm"
@@ -142,15 +143,14 @@
                     label="Registrarse"
                     size="large"
                     fluid
-                    
+                    [disabled]="!_formRegister$.valid"
                     [loading]="_loaddingRegister$()"
                 />
-                <!-- [disabled]="!_formRegister$.valid" -->
             </div>
 
-            <hr class="w-full border-gray-300">
+            <hr class="w-full border-gray-300 my-3">
 
-            <div> ¿Ya tienes una cuenta de Taskero? <a routerLink="/auth/login" class="text-(--primary-color) cursor-pointer underline!">Iniciar sesión</a></div>
+            <div> ¿Ya tienes una cuenta de Taskero? <p-button routerLink="/auth/login" link label="Iniciar sesión" styleClass="p-0!"/></div>
         </form>
     </p-card>
 </div>

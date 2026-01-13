@@ -56,7 +56,7 @@ export class Toast implements OnInit {
       t[id] = setInterval(() => {
         const progressMessage = this.progress()[id] || 0;
         this.progress.update((p) => ({ ...p, [id]: Math.max(0, Number((progressMessage - step).toFixed(2))) }));
-        if (this.progress()[id] <= 0 || isNaN(this.progress()[id])) this.clear(id);
+        if (this.progress()[id] <= 0) this.clear(id);
       }, interval);
       return t;
     });
@@ -74,7 +74,7 @@ export class Toast implements OnInit {
 
   onResume(message: ToastMessageOptions) {
     if (Array.isArray(message)) return;
-    this.startTimer(message.id, message.life!, this.progress()[message.id!]);
+    this.startTimer(message.id, message.life ?? 3000, this.progress()[message.id!]);
   }
 
   private clear(id: string) {

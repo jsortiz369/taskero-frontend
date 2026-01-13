@@ -36,7 +36,7 @@ export const _TOAST: ToastDesignTokens = {
     },
   },
   closeIcon: {
-    size: '1rem',
+    size: '1.15rem',
   },
   colorScheme: {
     light: {
@@ -103,7 +103,7 @@ export const _TOAST: ToastDesignTokens = {
         detailColor: '{surface.700}',
         shadow: '0px 4px 8px 0px color-mix(in srgb, {surface.500}, transparent 96%)',
         closeButton: {
-          hoverBackground: '{surface.200}',
+          hoverBackground: 'none',
           focusRing: {
             color: '{surface.600}',
             shadow: 'none',
@@ -112,10 +112,10 @@ export const _TOAST: ToastDesignTokens = {
       },
       contrast: {
         background: '{surface.900}',
-        borderColor: '{surface.950}',
+        borderColor: '{surface.0}',
         color: '{surface.50}',
         detailColor: '{surface.0}',
-        shadow: '0px 4px 8px 0px color-mix(in srgb, {surface.50}, transparent 96%)',
+        shadow: '0px 4px 8px 0px color-mix(in srgb, {red.50}, transparent 96%)',
         closeButton: {
           hoverBackground: 'none',
           focusRing: {
@@ -128,7 +128,7 @@ export const _TOAST: ToastDesignTokens = {
     dark: {
       info: {
         background: '{surface.950}',
-        borderColor: '{surface.900}',
+        borderColor: '{surface.950}',
         color: '{blue.400}',
         detailColor: '{surface.0}',
         shadow: '0px 4px 8px 0px color-mix(in srgb, {blue.400}, transparent 96%)',

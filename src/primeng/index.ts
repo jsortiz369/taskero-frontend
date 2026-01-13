@@ -13,6 +13,7 @@ export const customerConfigPrimeNG = () =>
       menu: 1000,
       tooltip: 1100,
     },
+
     theme: {
       preset: _PRESET,
       options: { darkModeSelector: '.app-dark' },

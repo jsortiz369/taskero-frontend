@@ -5,7 +5,7 @@ import z from 'zod';
 export type RegisterModel = {
   names: FormControl<string>;
   surnames: FormControl<string>;
-  birthday: FormControl<Date>;
+  username: FormControl<string>;
   phone: FormControl<string>;
   email: FormControl<string>;
   password: FormControl<string>;
@@ -17,7 +17,7 @@ export type ResponseRegisterExist = z.infer<typeof registerValidatorsSchema>;
 export type RegisterForm = {
   names: string;
   surnames: string;
-  birthday: Date;
+  username: string;
   phone: string;
   email: string;
   password: string;

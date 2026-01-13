@@ -12,13 +12,13 @@
   padding-bottom: 2rem;
 }
 
-.card {
+/* .card {
   background: var(--surface-card);
   padding: 2rem;
   margin-bottom: 2rem;
   border-radius: var(--content-border-radius);
-}
+} */
 
-.card :last-child {
+/* .card :last-child {
   margin-bottom: 0;
-}
+} */

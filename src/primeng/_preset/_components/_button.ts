@@ -49,14 +49,14 @@ export const _BUTTON: ButtonDesignTokens = {
           },
         },
         secondary: {
-          background: '{surface.100}',
-          hoverBackground: '{surface.200}',
+          background: '{surface.600}',
+          hoverBackground: '{surface.700}',
           activeBackground: '{surface.300}',
           borderColor: '{surface.100}',
           hoverBorderColor: '{surface.200}',
           activeBorderColor: '{surface.300}',
-          color: '{surface.600}',
-          hoverColor: '{surface.700}',
+          color: '{surface.950}',
+          hoverColor: '{surface.500}',
           activeColor: '{surface.800}',
           focusRing: {
             color: '{surface.600}',

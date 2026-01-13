@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ValidatorFn } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { finalize } from 'rxjs';
+import { ZodError } from 'zod';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -8,27 +10,43 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 import { Floating } from '../../ui/floating/floating';
-import { RegisterModel } from '../../models/register.model';
+import { RegisterModel } from '../../models/register';
 import { AppModule } from '../../../../app.module';
 import { REGEX } from '../../../../shared/constants/regex';
 import { ValidatorReactive } from '../../../../shared/utils/validator-reactive';
 import { Label } from '../../../../shared/components/label/label';
-import { existEmail, existPhone } from '../../utils/register-validators';
+import { existEmail, existPhone, existUsername, matchPassword } from '../../utils/register-validators';
 import { Auth } from '../../services';
 import { Toast } from '../../../../shared/services/toast';
+import { HttepErrors } from '../../../../shared/models/http-erros';
+import { PrimeNG } from 'primeng/config';
+import { updatePreset, updateSurfacePalette } from '@primeuix/themes';
 
 const VALIDATOR = [
   ValidatorReactive.required(),
-  ValidatorReactive.pattern(REGEX.LETTER_NUMBER_SPACE),
+  ValidatorReactive.pattern(REGEX.INPUT_TEXT),
   ValidatorReactive.minLength(2),
   ValidatorReactive.maxLength(50),
 ];
 
 @Component({
   selector: 'app-register',
-  imports: [AppModule, Floating, CardModule, DividerModule, ButtonModule, InputTextModule, DatePickerModule, InputMaskModule, PasswordModule, Label],
+  imports: [
+    AppModule,
+    Floating,
+    CardModule,
+    DividerModule,
+    ButtonModule,
+    InputTextModule,
+    DatePickerModule,
+    InputMaskModule,
+    PasswordModule,
+    KeyFilterModule,
+    Label,
+  ],
   templateUrl: './register.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -37,8 +55,10 @@ export class Register implements OnInit {
   private readonly _auth$ = inject(Auth);
   private readonly _toast$ = inject(Toast);
 
-  protected readonly _mediumPassword$ = signal<string>(this.stringRegex(REGEX.MEDIUM_PASSWORD)).asReadonly();
-  protected readonly _strongPassword$ = signal<string>(this.stringRegex(REGEX.STRONG_PASSWORD)).asReadonly();
+  protected readonly _mediumPassword$ = signal<string>(this.stringRegex(REGEX.INPUT_PASSWORD_MEDIUM)).asReadonly();
+  protected readonly _strongPassword$ = signal<string>(this.stringRegex(REGEX.INPUT_PASSWORD_STRONG)).asReadonly();
+  protected readonly _textRegex$ = signal<RegExp>(REGEX.INPUT_TEXT).asReadonly();
+  protected readonly _usernameRegex$ = signal<RegExp>(REGEX.INPUT_USERNAME).asReadonly();
   protected readonly _loaddingRegister$ = signal<boolean>(false);
 
   protected readonly cardFullScreen = signal(false);
@@ -46,7 +66,16 @@ export class Register implements OnInit {
     {
       names: this._fb$.nonNullable.control('', [...VALIDATOR]),
       surnames: this._fb$.nonNullable.control('', [...VALIDATOR]),
-      birthday: this._fb$.nonNullable.control(undefined as unknown as Date, ValidatorReactive.required()),
+      username: this._fb$.nonNullable.control(
+        '',
+        [
+          ValidatorReactive.required(),
+          ValidatorReactive.minLength(5),
+          ValidatorReactive.pattern(REGEX.INPUT_USERNAME, 'No cumple para nombre de usuario'),
+          ValidatorReactive.maxLength(20),
+        ],
+        [existUsername(this._auth$)],
+      ),
       phone: this._fb$.nonNullable.control('', ValidatorReactive.required(), existPhone(this._auth$)),
       email: this._fb$.nonNullable.control(
         '',
@@ -55,18 +84,18 @@ export class Register implements OnInit {
       ),
       password: this._fb$.nonNullable.control('', [
         ValidatorReactive.required(),
-        ValidatorReactive.pattern(REGEX.MEDIUM_PASSWORD, 'La contraseña no cumple con al menos una contraseña media.'),
+        ValidatorReactive.pattern(REGEX.INPUT_PASSWORD_MEDIUM, 'La contraseña no cumple con al menos una contraseña media.'),
       ]),
-      passwordConfirm: this._fb$.nonNullable.control(''),
+      passwordConfirm: this._fb$.nonNullable.control('', ValidatorReactive.required()),
     },
     {
-      validators: this.validatePassword(),
+      validators: matchPassword(),
     },
   );
 
   readonly progress = signal(0);
 
-  constructor() {}
+  constructor(private readonly servicePrimenNG: PrimeNG) {}
 
   get controls$() {
     return this._formRegister$.controls;
@@ -83,64 +112,36 @@ export class Register implements OnInit {
   }
 
   protected register() {
-    try {
-      this._loaddingRegister$.set(true);
+    if (!this._formRegister$.valid) return;
 
-      this._toast$.toast({
-        severity: 'secondary',
-        icon: 'pi-check-circle',
-        detail:
-          'Message Content dsfsdfsdfsdfs assd sad sad dsdasdasdasdsa sadasd sd sadasd as  sdasdas ad asdas dasd as da ad sadsa dsa asdasdas asd asad',
-        life: 3000,
-        sticky: true,
-      });
-
-      this._toast$.toast({
-        severity: 'contrast',
-        icon: 'pi-check-circle',
-        detail:
-          'Message Content dsfsdfsdfsdfs assd sad sad dsdasdasdasdsa sadasd sd sadasd as  sdasdas ad asdas dasd as da ad sadsa dsa asdasdas asd asad',
-        life: 3000,
-        sticky: true,
-      });
-
-      setTimeout(() => {
-        this._loaddingRegister$.set(false);
-      }, 500);
-
-      if (this._formRegister$.invalid) return;
-    } catch (error: any) {
-      alert(error.message);
-    }
-
-    /* const { passwordConfirm, ...register } = this._formRegister$.getRawValue();
-    register.phone = register.phone.replace(/[^0-9+]/g, '');
+    const { passwordConfirm, ...register } = this._formRegister$.getRawValue();
+    register.phone = register.phone.replace(/[^0-9]+/g, '');
     this._loaddingRegister$.set(true);
     this._auth$
       .register(register)
       .pipe(finalize(() => this._loaddingRegister$.set(false)))
       .subscribe({
         next: (data) => {
-          console.log(data);
+          this._toast$.toast({ severity: 'success', summary: 'Exito', detail: 'Registro exitoso' });
+          this._formRegister$.reset();
         },
-        error: (error) => {
-          console.log(error);
+        error: (error: HttpErrorResponse | ZodError) => {
+          if (!(error instanceof HttpErrorResponse)) {
+            error.issues.forEach((issue) => console.log(issue.message));
+            return;
+          }
+
+          const errors = error.error as HttepErrors;
+          if (error.status === 400) {
+            const message = errors.error.message;
+            const detail = Array.isArray(message) ? message.join('\n') : message;
+            this._toast$.toast({ severity: 'error', summary: 'Error', detail: detail });
+          } else if (error.status === 409) {
+            const message = String(errors.error.message);
+            this._toast$.toast({ severity: 'warn', summary: 'Error', detail: message });
+          }
         },
-      }); */
-  }
-
-  private validatePassword(): ValidatorFn {
-    return (control) => {
-      const password = control.get('password')?.value;
-      const passwordConfirm = control.get('passwordConfirm')?.value;
-
-      if (password !== passwordConfirm) {
-        control.get('passwordConfirm')?.setErrors({ passwordNotMatch: 'Las contraseña no coinciden' });
-      } else {
-        if (control.get('passwordConfirm')?.hasError('passwordNotMatch')) control.get('passwordConfirm')?.setErrors(null);
-      }
-      return null;
-    };
+      });
   }
 
   private stringRegex(regex: RegExp): string {
