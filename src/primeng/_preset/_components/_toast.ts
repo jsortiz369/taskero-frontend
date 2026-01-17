@@ -112,7 +112,7 @@ export const _TOAST: ToastDesignTokens = {
       },
       contrast: {
         background: '{surface.900}',
-        borderColor: '{surface.0}',
+        borderColor: '{surface.950}',
         color: '{surface.50}',
         detailColor: '{surface.0}',
         shadow: '0px 4px 8px 0px color-mix(in srgb, {red.50}, transparent 96%)',
@@ -212,4 +212,17 @@ export const _TOAST: ToastDesignTokens = {
       },
     },
   },
+  css: `
+    .p-toast-message .progress-container {
+      background: transparent;
+      border-bottom-left-radius: var(--p-toast-border-radius);
+      border-bottom-right-radius: var(--p-toast-border-radius);
+    }
+
+    .p-toast-message .progress-bar {
+      height: 100%;
+      transition: width 50ms linear;
+      border-bottom-width: 5px;
+    } 
+  `,
 };

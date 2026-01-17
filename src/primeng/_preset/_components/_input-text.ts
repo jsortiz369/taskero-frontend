@@ -1,3 +1,4 @@
+import { StyleOptions } from '@primeuix/themes';
 import { InputTextDesignTokens } from '@primeuix/themes/types/inputtext';
 
 export const _INPUT_TEXT: InputTextDesignTokens = {
@@ -34,7 +35,7 @@ export const _INPUT_TEXT: InputTextDesignTokens = {
     },
     lg: {
       fontSize: '{form.field.lg.font.size}',
-      paddingX: '0.375rem',
+      paddingX: '{form.field.lg.padding.x}',
       paddingY: '{form.field.lg.padding.y}',
     },
   },

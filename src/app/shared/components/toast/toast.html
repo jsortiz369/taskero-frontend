@@ -13,7 +13,7 @@
             (mouseenter)="onPause(message)"
             (mouseleave)="onResume(message)"
         >
-            <div class="py-3">
+            <div class="py-3 pointer-events-none">
                 @if(message.icon) {
                     <i class="pi {{message.icon}} p-toast-message-icon"></i>
                 }@else {
@@ -58,7 +58,10 @@
 
         @if(!message.sticky) {
             <div class="progress-container absolute bottom-0 left-0 right-0">
-                <div class="progress-bar" [style.width.%]="progress()[message.id] || 0"></div>
+                <div 
+                    class="progress-bar"
+                    [style.width.%]="progress()[message.id] || 0"
+                ></div>
             </div>
         }
     </ng-template>

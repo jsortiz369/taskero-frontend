@@ -7,6 +7,14 @@ export const customerConfigPrimeNG = () =>
   providePrimeNG({
     inputVariant: 'filled',
     overlayAppendTo: 'self',
+    overlayOptions: {
+      appendTo: 'body',
+      mode: 'overlay',
+      hideOnEscape: false,
+      responsive: {
+        direction: 'top-end',
+      },
+    },
     zIndex: {
       modal: 1100,
       overlay: 1000,
@@ -16,8 +24,8 @@ export const customerConfigPrimeNG = () =>
 
     theme: {
       preset: _PRESET,
-      options: { darkModeSelector: '.app-dark' },
+      options: { darkModeSelector: '.taskero-dark' },
     },
     translation: _TRANSLATION,
-    ripple: false,
+    ripple: true,
   });

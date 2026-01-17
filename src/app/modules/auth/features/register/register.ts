@@ -1,29 +1,23 @@
-import { ChangeDetectionStrategy, Component, HostListener, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, ValidatorFn } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { finalize } from 'rxjs';
 import { ZodError } from 'zod';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
 import { KeyFilterModule } from 'primeng/keyfilter';
 
-import { Floating } from '../../ui/floating/floating';
 import { RegisterModel } from '../../models/register';
 import { AppModule } from '../../../../app.module';
 import { REGEX } from '../../../../shared/constants/regex';
 import { ValidatorReactive } from '../../../../shared/utils/validator-reactive';
-import { Label } from '../../../../shared/components/label/label';
 import { existEmail, existPhone, existUsername, matchPassword } from '../../utils/register-validators';
 import { Auth } from '../../services';
 import { Toast } from '../../../../shared/services/toast';
 import { HttepErrors } from '../../../../shared/models/http-erros';
-import { PrimeNG } from 'primeng/config';
-import { updatePreset, updateSurfacePalette } from '@primeuix/themes';
+import { capitalizeAllWords } from '../../../../shared/utils/capitalize';
 
 const VALIDATOR = [
   ValidatorReactive.required(),
@@ -34,19 +28,7 @@ const VALIDATOR = [
 
 @Component({
   selector: 'app-register',
-  imports: [
-    AppModule,
-    Floating,
-    CardModule,
-    DividerModule,
-    ButtonModule,
-    InputTextModule,
-    DatePickerModule,
-    InputMaskModule,
-    PasswordModule,
-    KeyFilterModule,
-    Label,
-  ],
+  imports: [AppModule, DividerModule, ButtonModule, InputMaskModule, PasswordModule, KeyFilterModule],
   templateUrl: './register.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -61,7 +43,6 @@ export class Register implements OnInit {
   protected readonly _usernameRegex$ = signal<RegExp>(REGEX.INPUT_USERNAME).asReadonly();
   protected readonly _loaddingRegister$ = signal<boolean>(false);
 
-  protected readonly cardFullScreen = signal(false);
   protected readonly _formRegister$ = this._fb$.group<RegisterModel>(
     {
       names: this._fb$.nonNullable.control('', [...VALIDATOR]),
@@ -76,7 +57,11 @@ export class Register implements OnInit {
         ],
         [existUsername(this._auth$)],
       ),
-      phone: this._fb$.nonNullable.control('', ValidatorReactive.required(), existPhone(this._auth$)),
+      phone: this._fb$.nonNullable.control('', {
+        validators: ValidatorReactive.required(),
+        asyncValidators: existPhone(this._auth$),
+        updateOn: 'blur',
+      }),
       email: this._fb$.nonNullable.control(
         '',
         [ValidatorReactive.required(), ValidatorReactive.minLength(5), ValidatorReactive.email(), ValidatorReactive.maxLength(100)],
@@ -93,29 +78,21 @@ export class Register implements OnInit {
     },
   );
 
-  readonly progress = signal(0);
-
-  constructor(private readonly servicePrimenNG: PrimeNG) {}
+  constructor() {}
 
   get controls$() {
     return this._formRegister$.controls;
   }
 
-  ngOnInit(): void {
-    this.onResize();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event?: any) {
-    const width = event?.target?.innerWidth ?? window.innerWidth;
-    this.cardFullScreen.set(width < 480 ? true : false);
-  }
+  ngOnInit(): void {}
 
   protected register() {
     if (!this._formRegister$.valid) return;
 
     const { passwordConfirm, ...register } = this._formRegister$.getRawValue();
     register.phone = register.phone.replace(/[^0-9]+/g, '');
+    register.names = capitalizeAllWords(register.names);
+    register.surnames = capitalizeAllWords(register.surnames);
     this._loaddingRegister$.set(true);
     this._auth$
       .register(register)

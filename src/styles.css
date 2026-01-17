@@ -2,3 +2,4 @@
 @import 'tailwindcss';
 @import './assets/layout.css';
 @import 'primeicons/primeicons.css';
+@custom-variant dark (&:where(.taskero-dark, .taskero-dark *));

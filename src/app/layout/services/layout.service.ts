@@ -35,11 +35,11 @@ export class LayoutService {
   }
 
   toggleDarkMode() {
-    if (document.documentElement.classList.contains('app-dark')) {
-      document.documentElement.classList.remove('app-dark');
+    if (document.documentElement.classList.contains('taskero-dark')) {
+      document.documentElement.classList.remove('taskero-dark');
       this.darkMode.set(false);
     } else {
-      document.documentElement.classList.add('app-dark');
+      document.documentElement.classList.add('taskero-dark');
       this.darkMode.set(true);
     }
   }

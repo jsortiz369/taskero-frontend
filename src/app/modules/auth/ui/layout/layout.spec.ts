@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Floating } from './floating';
+import { Layout } from './layout';
 
-describe('Floating', () => {
-  let component: Floating;
-  let fixture: ComponentFixture<Floating>;
+describe('Layout', () => {
+  let component: Layout;
+  let fixture: ComponentFixture<Layout>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Floating]
+      imports: [Layout]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Floating);
+    fixture = TestBed.createComponent(Layout);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

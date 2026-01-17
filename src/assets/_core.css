@@ -4,66 +4,6 @@ html {
   font-family: 'Inter var', sans-serif;
 }
 
-body {
-  margin: 0;
-  min-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  background-color: var(--p-body-background);
-  color: var(--p-text-color);
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  text-decoration: none;
-}
-
-.layout-wrapper {
-  min-height: 100dvh;
-}
-
 *:disabled {
   cursor: not-allowed !important;
-}
-
-.p-toast-message .progress-container {
-  height: 4px;
-  background: transparent;
-  border-bottom-left-radius: var(--p-toast-border-radius);
-  border-bottom-right-radius: var(--p-toast-border-radius);
-}
-
-.p-toast-message .progress-bar {
-  height: 100%;
-  transition: width 50ms linear;
-}
-
-.p-toast-message .p-toast-message-content .p-toast-close-button {
-  right: 0;
-}
-
-.p-toast-message-info .progress-bar {
-  background: var(--p-toast-info-color);
-}
-
-.p-toast-message-success .progress-bar {
-  background: var(--p-toast-success-color);
-}
-
-.p-toast-message-error .progress-bar {
-  background: var(--p-toast-error-color);
-}
-
-.p-toast-message-warn .progress-bar {
-  background: var(--p-toast-warn-color);
-}
-
-.p-toast-message-secondary .progress-bar {
-  background: var(--p-toast-secondary-color);
-}
-
-.p-toast-message-contrast .progress-bar {
-  background: var(--p-toast-contrast-color);
 }

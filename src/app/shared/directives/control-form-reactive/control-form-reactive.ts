@@ -1,6 +1,6 @@
 import { ComponentRef, Directive, ElementRef, inject, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { EMPTY, fromEvent, merge, Subject, takeUntil } from 'rxjs';
+import { EMPTY, fromEvent, merge, Subject, take, takeUntil, withLatestFrom } from 'rxjs';
 
 import { SubmitFormReactive } from '../submit-form-reactive/submit-form-reactive';
 import { ControlMessageError } from '../../components/control-message-error/control-error.component';
@@ -36,30 +36,39 @@ export class ControlFormReactive implements OnInit, OnDestroy {
 
   private validatorsErrors() {
     const messageError = this.ControlErros();
+
     if (!this.componentRef) this.componentRef = this.vcr.createComponent(ControlMessageError);
     this.componentRef.setInput('text', messageError);
 
-    // add classes to element invalid
     const parentElement: HTMLElement | null = this.elementRef.nativeElement;
     const elementRef = parentElement.tagName !== 'INPUT' ? parentElement.querySelector('input') : parentElement;
-    if (messageError) elementRef?.classList.add('ng-invalid', 'ng-touched', 'ng-dirty');
-    else elementRef?.classList.remove('ng-invalid');
 
     // append element message
     let appendNode: ParentNode | null | undefined = null;
-    const float = parentElement.parentElement?.classList.contains('p-float-label');
+    const float = parentElement.parentElement?.classList.contains('p-floatlabel');
     if (float) {
-      const group = parentElement.parentElement?.parentElement?.parentElement;
+      const group = parentElement.parentElement;
       if (group?.classList.contains('p-inputgroup')) appendNode = group.parentNode?.parentNode;
       else appendNode = group?.parentNode;
     } else {
       appendNode = parentElement.parentNode;
     }
 
-    if (appendNode) appendNode.appendChild(this.componentRef.location.nativeElement);
+    if (messageError) {
+      elementRef?.classList.add('ng-invalid', 'ng-touched', 'ng-dirty');
+      if (appendNode) appendNode.appendChild(this.componentRef.location.nativeElement);
+      return;
+    }
+
+    elementRef?.classList.remove('ng-invalid');
+    const elementError = String(this.componentRef.location.nativeElement.tagName).toLowerCase();
+    const existElementError = appendNode?.querySelector(elementError);
+    if (appendNode && existElementError) appendNode.removeChild(this.componentRef.location.nativeElement);
   }
 
   private ControlErros(): string | null {
+    if (!this.ngControl.dirty && !this.ngControl.touched) return null;
+
     const controlErros = this.ngControl.errors ?? {};
     const [key, value] = Object.entries(controlErros)[0] ?? [null, null];
     if (!value) return null;
@@ -83,12 +92,12 @@ export class ControlFormReactive implements OnInit, OnDestroy {
   }
 
   private messageMinlength(message: string | { requiredLength: number; actualLength: number }) {
-    if (typeof message !== 'string') return `Valor mínimo ${message.requiredLength} caracteres`;
+    if (typeof message !== 'string') return `Debe ser mínimo ${message.requiredLength} caracteres`;
     return message;
   }
 
   private messageMaxlength(message: string | { requiredLength: number; actualLength: number }) {
-    if (typeof message !== 'string') return `Valor máximo ${message.requiredLength} caracteres`;
+    if (typeof message !== 'string') return `Debe ser máximo ${message.requiredLength} caracteres`;
     return message;
   }
 

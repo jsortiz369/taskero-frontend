@@ -1,111 +1,111 @@
-@let fullScreen = cardFullScreen();
-<app-floating />
+<div class="flex items-center justify-between mb-5">
+    <div class="flex items-center gap-2">
+        <span class="text-4xl font-bold">
+            <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="var(--p-primary-color)">
+                <path d="M280-280h80v-400h-80v400Zm320-80h80v-320h-80v320ZM440-480h80v-200h-80v200ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
+            </span>
+        <span class="text-2xl font-bold tracking-tight">Taskero</span>
+    </div>
+    <div class="text-sm">
+        <span class="text-gray-500 dark:text-gray-400 mr-1">¿Tiene cuenta?</span>
+        <p-button routerLink="/auth/login" link label="Iniciar sesión" size="small" styleClass="p-0!"/>
+    </div>
+</div>
 
-
-<div 
-    class="grid place-items-center"
-    [ngClass]="fullScreen ? '': 'p-3'"
->
-    <p-card
-        header=""
-        class="p-12"
-        [style]="fullScreen ? {width: '100%', height: '100%'} : { width: '30rem' }"
-    >
-        <ng-template #header>
-            <div class="text-center mt-5 flex flex-col justify-center gap-2">
-                <a class="flex items-center gap-3 justify-center cursor-pointer" routerLink="/">
-                    <img src="icon.png" class="w-14">
-                    <span class="text-6xl"> Taskero </span>
-                </a>
-                <div class="text-lg font-bold">Regístrese para continuar</div>
-            </div>
-        </ng-template>
-        
-        <form class="w-full flex flex-wrap" autocomplete="off" [formGroup]="_formRegister$" (ngSubmit)="register()">
-            <div class="w-full sm:w-6/12 flex flex-col gap-0.5 pr-1 pb-2">
-                <app-label label="Nombres" id="names" [required]="true" />
-                <input 
+<div class="max-w-md w-full mx-auto">
+    <div class="mb-8 text-center">
+        <h1 class="text-4xl font-bold leading-tight">Crea tu cuenta</h1>
+        <p class="text-(--p-surface-500) dark:text-(--p-surface-400) text-lg">Comience a gestionar sus proyectos con rapidez y claridad.</p>
+    </div>
+    <form class="w-full flex flex-wrap" autocomplete="off" [formGroup]="_formRegister$" (ngSubmit)="register()">
+        <div class="w-full md:w-6/12 flex flex-col gap-0.5 md:pr-1 mb-3">
+            <p-floatlabel variant="on">
+                <input
                     pInputText
                     [pKeyFilter]="_textRegex$()"
                     id="names"
-                    placeholder="Ingrese sus nombres"
                     autocomplete="one-time-code"
-                    pSize="large"
                     formControlName="names"
+                    pSize="large"
+                    fluid
                 />
-            </div>
+                <label for="names">Nombres<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+            </p-floatlabel>
+        </div>
 
-            <div class="w-full sm:w-6/12 flex flex-col gap-0.5 pl-1 pb-2">
-                <app-label label="Apellidos" id="surnames" [required]="true" />
-                <input 
+        <div class="w-full md:w-6/12 flex flex-col gap-0.5 md:pl-1 mb-3">
+            <p-floatlabel variant="on">
+                <input
                     pInputText
                     [pKeyFilter]="_textRegex$()"
                     id="surnames"
-                    placeholder="Ingrese sus apellidos"
                     autocomplete="one-time-code"
-                    pSize="large"
                     formControlName="surnames"
-                />
-            </div>
-
-            <div class="w-full flex flex-col gap-0.5 pb-2">
-                <app-label label="Nombre de usuario" id="username" [required]="true" />
-                <input 
-                    pInputText 
-                    [pKeyFilter]="_usernameRegex$()"
-                    id="username" 
-                    class="w-full"
                     pSize="large"
-                    formControlName="username"
-                    placeholder="Ingrese un nombre de usuario"
-                    autocomplete="one-time-code"
+                    fluid
                 />
-            </div>
+                <label for="surnames">Apellidos<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+            </p-floatlabel>
+        </div>
 
-            <div class="w-full flex flex-col gap-0.5 pb-2">
-                <app-label label="Teléfono" id="phone" [required]="true" />
+        <div class="w-full flex flex-col gap-0.5 mb-3">
+            <p-floatlabel variant="on">
+                <input
+                    pInputText
+                    [pKeyFilter]="_usernameRegex$()"
+                    id="username"
+                    autocomplete="one-time-code"
+                    formControlName="username"
+                    pSize="large"
+                    fluid
+                />
+                <label for="username">Nombre de usuario<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+            </p-floatlabel>
+        </div>
+
+        <div class="w-full flex flex-col gap-0.5 mb-3">
+            <p-floatlabel variant="on">
                 <p-inputmask
                     inputId="phone"
                     mask="(+57) 999-9999-999" 
-                    formControlName="phone" 
-                    placeholder="(+57) 999-9999-999"
-                    size="large"
+                    formControlName="phone"
                     fluid
+                    size="large"
                     type="tel"
                 />
-            </div>
+                <label for="phone">Teléfono<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+            </p-floatlabel>
+        </div>
 
-            <div class="w-full flex flex-col gap-0.5 pb-2">
-                <app-label label="Correo" id="email" [required]="true" />
+        <div class="w-full flex flex-col gap-0.5 mb-3">
+            <p-floatlabel variant="on">
                 <input
-                    pInputText 
+                    pInputText
                     id="email"
-                    placeholder="Ingrese su correo electrónico"
                     autocomplete="one-time-code"
-                    pSize="large"
                     formControlName="email"
+                    pSize="large"
+                    fluid
                 />
-            </div>
+                <label for="username">Correo<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+            </p-floatlabel>
+        </div>
 
-            <div class="w-full flex flex-col gap-0.5 pb-2">
-                <app-label label="Contraseña" id="password" [required]="true" />
+        <div class="w-full flex flex-col gap-0.5 mb-3">
+            <p-floatlabel variant="on">
                 <p-password 
                     inputId="password"
-                    formControlName="password" 
-                    promptLabel="Choose a password" 
-                    weakLabel="Too simple" 
-                    mediumLabel="Average complexity" 
-                    strongLabel="Complex password"
-                    [toggleMask]="true"
+                    formControlName="password"
+                    toggleMask
                     fluid
-                    size="large"
-                    placeholder="*************"
                     promptLabel="Ingrese una contraseña"
                     weakLabel="Contraseña muy debil"
                     mediumLabel="Contraseña media"
                     strongLabel="Contraseña fuerte"
                     [mediumRegex]="_mediumPassword$()"
                     [strongRegex]="_strongPassword$()"
+                    appendTo="body"
+                    size="large"
                 >
                     <ng-template #header>
                         <div class="font-semibold text-xm mb-4">Nivel de complejidad</div>
@@ -122,10 +122,12 @@
                         </ul>
                     </ng-template>
                 </p-password>
-            </div>
+                <label for="password">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+            </p-floatlabel>
+        </div>
 
-            <div class="w-full flex flex-col gap-0.5 mb-2">
-                <app-label label="Confirmar contraseña" id="passwordConfirm" [required]="true" />
+        <div class="w-full flex flex-col gap-0.5 mb-3">
+            <p-floatlabel variant="on">
                 <p-password
                     inputId="passwordConfirm"
                     formControlName="passwordConfirm"
@@ -133,24 +135,22 @@
                     [feedback]="false"
                     fluid
                     size="large"
-                    placeholder="*************"
                 />
-            </div>
+                <label for="passwordConfirm">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+            </p-floatlabel>
+        </div>
 
-            <div class="w-full">
-                <p-button
-                    type="submit"
-                    label="Registrarse"
-                    size="large"
-                    fluid
-                    [disabled]="!_formRegister$.valid"
-                    [loading]="_loaddingRegister$()"
-                />
-            </div>
-
-            <hr class="w-full border-gray-300 my-3">
-
-            <div> ¿Ya tienes una cuenta de Taskero? <p-button routerLink="/auth/login" link label="Iniciar sesión" styleClass="p-0!"/></div>
-        </form>
-    </p-card>
+        <div class="w-full">
+            <p-button
+                type="submit"
+                label="Registrarse"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                fluid
+                [disabled]="!_formRegister$.valid"
+                [loading]="_loaddingRegister$()"
+                size="large"
+            />
+        </div>
+    </form>
 </div>
