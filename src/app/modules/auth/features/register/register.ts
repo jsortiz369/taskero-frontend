@@ -18,6 +18,9 @@ import { Auth } from '../../services';
 import { Toast } from '../../../../shared/services/toast';
 import { HttepErrors } from '../../../../shared/models/http-erros';
 import { capitalizeAllWords } from '../../../../shared/utils/capitalize';
+import { CoreStorage } from '../../../../core/services/core-storage/core-storage';
+import { Router } from '@angular/router';
+import { EnumStorage } from '../../../../core/models/storage.model';
 
 const VALIDATOR = [
   ValidatorReactive.required(),
@@ -34,14 +37,16 @@ const VALIDATOR = [
 })
 export class Register implements OnInit {
   private readonly _fb$ = inject(FormBuilder);
-  private readonly _auth$ = inject(Auth);
+  private readonly _router$ = inject(Router);
   private readonly _toast$ = inject(Toast);
+  private readonly _auth$ = inject(Auth);
+  private readonly _storage$ = inject(CoreStorage);
 
   protected readonly _mediumPassword$ = signal<string>(this.stringRegex(REGEX.INPUT_PASSWORD_MEDIUM)).asReadonly();
   protected readonly _strongPassword$ = signal<string>(this.stringRegex(REGEX.INPUT_PASSWORD_STRONG)).asReadonly();
   protected readonly _textRegex$ = signal<RegExp>(REGEX.INPUT_TEXT).asReadonly();
   protected readonly _usernameRegex$ = signal<RegExp>(REGEX.INPUT_USERNAME).asReadonly();
-  protected readonly _loaddingRegister$ = signal<boolean>(false);
+  protected readonly _loadingRegister$ = signal<boolean>(false);
 
   protected readonly _formRegister$ = this._fb$.group<RegisterModel>(
     {
@@ -58,9 +63,8 @@ export class Register implements OnInit {
         [existUsername(this._auth$)],
       ),
       phone: this._fb$.nonNullable.control('', {
-        validators: ValidatorReactive.required(),
+        validators: [ValidatorReactive.required(), ValidatorReactive.pattern(/^\(\+57\) \d{3}-\d{4}-\d{3}$/, 'No cumple como teléfono')],
         asyncValidators: existPhone(this._auth$),
-        updateOn: 'blur',
       }),
       email: this._fb$.nonNullable.control(
         '',
@@ -93,14 +97,18 @@ export class Register implements OnInit {
     register.phone = register.phone.replace(/[^0-9]+/g, '');
     register.names = capitalizeAllWords(register.names);
     register.surnames = capitalizeAllWords(register.surnames);
-    this._loaddingRegister$.set(true);
+    this._loadingRegister$.set(true);
     this._auth$
       .register(register)
-      .pipe(finalize(() => this._loaddingRegister$.set(false)))
+      .pipe(finalize(() => this._loadingRegister$.set(false)))
       .subscribe({
         next: (data) => {
           this._toast$.toast({ severity: 'success', summary: 'Exito', detail: 'Registro exitoso' });
           this._formRegister$.reset();
+
+          this._storage$.setItem(EnumStorage.CONFIRM_ACCOUNT, data.tokenConfirm);
+          this._router$.navigateByUrl('/auth/confirm-account');
+          return;
         },
         error: (error: HttpErrorResponse | ZodError) => {
           if (!(error instanceof HttpErrorResponse)) {

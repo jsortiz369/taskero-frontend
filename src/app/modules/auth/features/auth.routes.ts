@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { confirmAccountGuard } from '../../../core/guards';
+
 export default [
   {
     path: 'login',
@@ -8,6 +10,10 @@ export default [
   {
     path: 'register',
     loadComponent: () => import('./register/register').then((m) => m.Register),
+  },
+  {
+    path: 'confirm-account',
+    loadComponent: () => import('./confirm-account/confirm-account').then((m) => m.ConfirmAccount),
   },
   {
     path: '**',

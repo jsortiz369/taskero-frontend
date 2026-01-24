@@ -1,0 +1,46 @@
+<div class="max-w-md w-full mx-auto">
+    <div class="mb-8 text-center">
+        <h1 class="text-4xl font-bold leading-tight">Verifique su cuenta</h1>
+        <p class="text-(--p-surface-500) dark:text-(--p-surface-400) text-lg">Hemos enviado un código de verificación de 6 dígitos.</p>
+    </div>
+
+    <form class="w-full flex flex-wrap" autocomplete="off">
+
+        <div class="w-full flex flex-col gap-0.5 mb-3 items-center">
+            <p-inputotp
+                [length]="6"
+                [integerOnly]="true"
+            >
+                <ng-template #input let-token let-events="events" let-index="index">
+                    <input
+                        pInputText
+                        pSize="large"
+                        type="text" 
+                        [maxLength]="1" 
+                        (input)="events.input($event)" 
+                        (keydown)="events.keydown($event)" 
+                        [attr.value]="token" 
+                        class="p-inputotp-input"
+                    />
+
+                    @if(index === 3) {
+                        <div class="px-4">
+                        <i class="pi pi-minus"></i>
+                    </div>
+                    }
+                </ng-template>
+            </p-inputotp>
+        </div>
+
+        <div class="w-full mb-3">
+            <p-button
+                type="submit"
+                label="Verificar cuenta"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                size="large"
+                fluid
+            />
+        </div>
+    </form>
+</div>

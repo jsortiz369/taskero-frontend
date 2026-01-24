@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { registerValidatorsSchema } from '../schemas/register.schemas';
+import { registerSchema, registerConflictSchema } from '../schemas/register.schemas';
 import z from 'zod';
 
 export type RegisterModel = {
@@ -12,8 +12,6 @@ export type RegisterModel = {
   passwordConfirm: FormControl<string>;
 };
 
-export type ResponseRegisterExist = z.infer<typeof registerValidatorsSchema>;
-
 export type RegisterForm = {
   names: string;
   surnames: string;
@@ -22,3 +20,7 @@ export type RegisterForm = {
   email: string;
   password: string;
 };
+
+export type ResponseRegisterConflict = z.infer<typeof registerConflictSchema>;
+
+export type ResponseRegister = z.infer<typeof registerSchema>;

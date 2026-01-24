@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateChildFn } from '@angular/router';
 
-import { guards2Guard } from './guards2-guard';
+import { confirmAccountGuard } from './confirm-account-guard';
 
-describe('guards2Guard', () => {
+describe('confirmAccountGuard', () => {
   const executeGuard: CanActivateChildFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => guards2Guard(...guardParameters));
+      TestBed.runInInjectionContext(() => confirmAccountGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

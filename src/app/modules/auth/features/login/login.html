@@ -14,7 +14,7 @@
 
 <div class="max-w-md w-full mx-auto">
     <div class="mb-8 text-center">
-        <h1 class="text-4xl font-bold leading-tight">Iniciar sesión en Taskero</h1>
+        <h1 class="text-4xl font-bold leading-tight">Iniciar sesión</h1>
         <p class="text-(--p-surface-500) dark:text-(--p-surface-400) text-lg">Gestione sus proyectos con facilidad.</p>
     </div>
     <form class="w-full flex flex-wrap" autocomplete="off" [formGroup]="_formLogin$" (ngSubmit)="login()">
@@ -24,6 +24,7 @@
                     pInputText
                     id="username"
                     autocomplete="one-time-code"
+                    formControlName="username"
                     pSize="large"
                     fluid
                 />
@@ -34,15 +35,22 @@
         <div class="w-full flex flex-col gap-0.5 mb-3">
             <p-floatlabel variant="on">
                 <p-password
-                    inputId="passwordConfirm"
+                    inputId="password"
                     [toggleMask]="true"
                     [feedback]="false"
+                    formControlName="password"
                     fluid
                     size="large"
                 />
-                <label for="passwordConfirm">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+                <label for="password">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
             </p-floatlabel>
         </div>
+
+        @if(_messageError$()){
+            <div class="w-full">
+                <app-control-error [text]="_messageError$()"] />
+            </div>
+        }
 
         <div class="w-full mb-3">
             <p-button
@@ -52,6 +60,8 @@
                 iconPos="right"
                 size="large"
                 fluid
+                [loading]="_loadingLogin$()"
+                [disabled]="!_formLogin$.valid || _disabledLogin$()"
             />
         </div>
 

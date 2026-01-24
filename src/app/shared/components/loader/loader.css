@@ -1,0 +1,31 @@
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: color-mix(in oklab, var(--p-surface-400) 60%, transparent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+}
+
+.loader-spinner {
+  border: 10px solid transparent;
+  border-top-color: var(--p-primary-color);
+  border-bottom-color: var(--p-primary-color);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

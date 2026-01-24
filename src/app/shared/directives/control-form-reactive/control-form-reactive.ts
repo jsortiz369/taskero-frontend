@@ -3,7 +3,7 @@ import { NgControl } from '@angular/forms';
 import { EMPTY, fromEvent, merge, Subject, take, takeUntil, withLatestFrom } from 'rxjs';
 
 import { SubmitFormReactive } from '../submit-form-reactive/submit-form-reactive';
-import { ControlMessageError } from '../../components/control-message-error/control-error.component';
+import { ControlMessageError } from '../../components/control-message-error/control-message-error';
 
 @Directive({
   selector: '[formControl], [formControlName]',
@@ -63,7 +63,10 @@ export class ControlFormReactive implements OnInit, OnDestroy {
     elementRef?.classList.remove('ng-invalid');
     const elementError = String(this.componentRef.location.nativeElement.tagName).toLowerCase();
     const existElementError = appendNode?.querySelector(elementError);
-    if (appendNode && existElementError) appendNode.removeChild(this.componentRef.location.nativeElement);
+
+    if (existElementError && existElementError.parentNode === appendNode) {
+      if (appendNode) appendNode.removeChild(existElementError);
+    }
   }
 
   private ControlErros(): string | null {

@@ -3,8 +3,8 @@ import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-loader',
-  imports: [],
   templateUrl: './loader.html',
+  styleUrls: ['./loader.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Loader {

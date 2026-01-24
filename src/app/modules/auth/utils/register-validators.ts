@@ -4,14 +4,14 @@ import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
 import { ZodError } from 'zod';
 
 import { Auth } from '../services';
-import { ResponseRegisterExist } from '../models/register';
+import { ResponseRegisterConflict } from '../models/register';
 
 export const existUsername = (authService: Auth): AsyncValidatorFn => {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     return timer(500).pipe(
       switchMap(() =>
         authService.registerConflictUsername(control.value).pipe(
-          map((response: ResponseRegisterExist) => {
+          map((response: ResponseRegisterConflict) => {
             return response.exist ? { usernameExists: 'Ya existe un usuario con este nombre de usuario.' } : null;
           }),
           catchError((error: HttpErrorResponse | ZodError) => {
@@ -29,7 +29,7 @@ export const existEmail = (authService: Auth): AsyncValidatorFn => {
     return timer(500).pipe(
       switchMap(() =>
         authService.registerConflictEmail(control.value).pipe(
-          map((response: ResponseRegisterExist) => {
+          map((response: ResponseRegisterConflict) => {
             return response.exist ? { emailExists: 'Ya existe un usuario con este correo.' } : null;
           }),
           catchError((error: HttpErrorResponse | ZodError) => {
@@ -48,7 +48,7 @@ export const existPhone = (authService: Auth): AsyncValidatorFn => {
       switchMap(() => {
         const phone = control.value.replace(/[^0-9]+/g, '');
         return authService.registerConflictPhone(phone).pipe(
-          map((response: ResponseRegisterExist) => {
+          map((response: ResponseRegisterConflict) => {
             return response.exist ? { phoneExists: 'Ya existe un usuario con este teléfono.' } : null;
           }),
           catchError((error: HttpErrorResponse | ZodError) => {
