@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ZodError } from 'zod';
 import { ButtonModule } from 'primeng/button';
@@ -19,7 +20,6 @@ import { Toast } from '../../../../shared/services/toast';
 import { HttepErrors } from '../../../../shared/models/http-erros';
 import { capitalizeAllWords } from '../../../../shared/utils/capitalize';
 import { CoreStorage } from '../../../../core/services/core-storage/core-storage';
-import { Router } from '@angular/router';
 import { EnumStorage } from '../../../../core/models/storage.model';
 
 const VALIDATOR = [
@@ -63,7 +63,7 @@ export class Register implements OnInit {
         [existUsername(this._auth$)],
       ),
       phone: this._fb$.nonNullable.control('', {
-        validators: [ValidatorReactive.required(), ValidatorReactive.pattern(/^\(\+57\) \d{3}-\d{4}-\d{3}$/, 'No cumple como teléfono')],
+        validators: [ValidatorReactive.required(), ValidatorReactive.pattern(/^\(\+57\) \d{3}-\d{4}-\d{3}$/, 'Teléfono no valido')],
         asyncValidators: existPhone(this._auth$),
       }),
       email: this._fb$.nonNullable.control(

@@ -54,13 +54,28 @@ export class ControlFormReactive implements OnInit, OnDestroy {
       appendNode = parentElement.parentNode;
     }
 
+    const otp = parentElement.tagName === 'P-INPUTOTP';
     if (messageError) {
-      elementRef?.classList.add('ng-invalid', 'ng-touched', 'ng-dirty');
+      if (otp) {
+        parentElement.querySelectorAll('input').forEach((input) => {
+          input.classList.add('ng-invalid', 'ng-touched', 'ng-dirty');
+        });
+      } else {
+        elementRef?.classList.add('ng-invalid', 'ng-touched', 'ng-dirty');
+      }
+
       if (appendNode) appendNode.appendChild(this.componentRef.location.nativeElement);
       return;
     }
 
-    elementRef?.classList.remove('ng-invalid');
+    if (otp) {
+      parentElement.querySelectorAll('input').forEach((input) => {
+        input.classList.remove('ng-invalid');
+      });
+    } else {
+      elementRef?.classList.remove('ng-invalid');
+    }
+
     const elementError = String(this.componentRef.location.nativeElement.tagName).toLowerCase();
     const existElementError = appendNode?.querySelector(elementError);
 

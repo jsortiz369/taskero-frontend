@@ -2,13 +2,14 @@
     <div class="flex items-center gap-2">
         <span class="text-4xl font-bold">
             <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="var(--p-primary-color)">
-                <path d="M280-280h80v-400h-80v400Zm320-80h80v-320h-80v320ZM440-480h80v-200h-80v200ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
-            </span>
+                <path d="M280-280h80v-400h-80v400Zm320-80h80v-320h-80v320ZM440-480h80v-200h-80v200ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/>
+            </svg>
+        </span>
         <span class="text-2xl font-bold tracking-tight">Taskero</span>
     </div>
-    <div class="text-sm">
+    <div>
         <span class="text-gray-500 dark:text-gray-400 mr-1">¿Nuevo aquí?</span>
-        <p-button routerLink="/auth/register" link label="Registrarse" size="small" styleClass="p-0!"/>
+        <p-button routerLink="/auth/register" link label="Registrarse" styleClass="p-0!"/>
     </div>
 </div>
 
@@ -17,8 +18,8 @@
         <h1 class="text-4xl font-bold leading-tight">Iniciar sesión</h1>
         <p class="text-(--p-surface-500) dark:text-(--p-surface-400) text-lg">Gestione sus proyectos con facilidad.</p>
     </div>
-    <form class="w-full flex flex-wrap" autocomplete="off" [formGroup]="_formLogin$" (ngSubmit)="login()">
-        <div class="w-full flex flex-col gap-0.5 mb-3">
+    <form class="flex flex-wrap -mx-2" autocomplete="off" [formGroup]="_formLogin$" (ngSubmit)="login()">
+        <div class="w-full px-2 mb-2">
             <p-floatlabel variant="on">
                 <input
                     pInputText
@@ -32,7 +33,7 @@
             </p-floatlabel>
         </div>
 
-        <div class="w-full flex flex-col gap-0.5 mb-3">
+        <div class="w-full px-2 mb-2">
             <p-floatlabel variant="on">
                 <p-password
                     inputId="password"
@@ -47,12 +48,12 @@
         </div>
 
         @if(_messageError$()){
-            <div class="w-full">
+            <div class="w-full px-2 mb-2">
                 <app-control-error [text]="_messageError$()"] />
             </div>
         }
 
-        <div class="w-full mb-3">
+        <div class="w-full px-2 mb-2">
             <p-button
                 type="submit"
                 label="Iniciar sesión"
@@ -65,7 +66,7 @@
             />
         </div>
 
-        <div class="w-full mb-3 text-end">
+        <div class="w-full px-2 mb-2 text-end">
             <p-button routerLink="/auth/register" link label="¿Olvidó su contraseña?" size="small" styleClass="p-0!"/>
         </div>
     </form>

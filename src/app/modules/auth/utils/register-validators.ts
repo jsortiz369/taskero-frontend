@@ -30,7 +30,7 @@ export const existEmail = (authService: Auth): AsyncValidatorFn => {
       switchMap(() =>
         authService.registerConflictEmail(control.value).pipe(
           map((response: ResponseRegisterConflict) => {
-            return response.exist ? { emailExists: 'Ya existe un usuario con este correo.' } : null;
+            return response.exist ? { emailExists: 'Correo ya registrado.' } : null;
           }),
           catchError((error: HttpErrorResponse | ZodError) => {
             if (!(error instanceof HttpErrorResponse)) error.issues.forEach((issue) => console.log(issue.message));
@@ -49,7 +49,7 @@ export const existPhone = (authService: Auth): AsyncValidatorFn => {
         const phone = control.value.replace(/[^0-9]+/g, '');
         return authService.registerConflictPhone(phone).pipe(
           map((response: ResponseRegisterConflict) => {
-            return response.exist ? { phoneExists: 'Ya existe un usuario con este teléfono.' } : null;
+            return response.exist ? { phoneExists: 'Teléfono ya registrado.' } : null;
           }),
           catchError((error: HttpErrorResponse | ZodError) => {
             if (!(error instanceof HttpErrorResponse)) error.issues.forEach((issue) => console.log(issue.message));
