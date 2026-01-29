@@ -42,4 +42,8 @@ export class Auth {
   register(register: RegisterForm): Observable<ResponseRegister> {
     return this._http$.post<ResponseRegister>(`${this._urlBase$}/auth/register`, register).pipe(map((res) => registerSchema.parse(res)));
   }
+
+  confirmAccount(token: string) {
+    return this._http$.post(`${this._urlBase$}/auth/confirm-account`, { token });
+  }
 }

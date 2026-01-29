@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpInterceptorFn } from '@angular/common/http';
 
-import { timezoneInterceptor } from './timezone-interceptor';
+import { headersInterceptor } from './headers-interceptor';
 
-describe('timezoneInterceptor', () => {
+describe('headersInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) => 
-    TestBed.runInInjectionContext(() => timezoneInterceptor(req, next));
+    TestBed.runInInjectionContext(() => headersInterceptor(req, next));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

@@ -11,6 +11,7 @@ import { CoreStorage } from '../../../../core/services/core-storage/core-storage
 import { ConfirmModel } from '../../models/confirm';
 import { ValidatorReactive } from '../../../../shared/utils/validator-reactive';
 import { Toast } from '../../../../shared/services/toast';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-confirm-account',
@@ -29,8 +30,8 @@ export class ConfirmAccount implements OnInit, OnDestroy {
 
   readonly _disabledResendCode$ = signal<boolean>(true);
   readonly _loadingConfirm$ = signal<boolean>(false);
-  readonly _minutes$ = signal<number>(1);
-  readonly _seconds$ = signal<number>(59);
+  readonly _minutes$ = signal<number>(2);
+  readonly _seconds$ = signal<number>(0);
 
   protected readonly _formConfirm$ = this._fb$.group<ConfirmModel>({
     otp: this._fb$.nonNullable.control('', ValidatorReactive.required()),
@@ -48,16 +49,36 @@ export class ConfirmAccount implements OnInit, OnDestroy {
     if (this.idInterval) clearInterval(this.idInterval);
   }
 
+  onResendCode() {
+    if (this._disabledResendCode$()) return;
+    this.initIntervalResendCode();
+
+    // reenviar codigo
+  }
+
   comfirmAccount() {
     if (!this._formConfirm$.valid) return;
-    const data = this._formConfirm$.getRawValue();
+    const { otp } = this._formConfirm$.getRawValue();
 
-    console.log('data confirm', data);
+    this._loadingConfirm$.set(true);
+    this._auth$
+      .confirmAccount(otp)
+      .pipe(finalize(() => this._loadingConfirm$.set(false)))
+      .subscribe({
+        next: () => {
+          console.log('code exitoso');
+          // this._toast$.success('Success', 'The code has been resent to your email.');
+        },
+        error: (err) => {
+          this._loadingConfirm$.set(false);
+          //this._toast$.error('Error', err?.message || 'Failed to resend code. Please try again.');
+        },
+      });
   }
 
   private initIntervalResendCode() {
-    this._minutes$.set(1);
-    this._seconds$.set(59);
+    this._minutes$.set(2);
+    this._seconds$.set(0);
     this._disabledResendCode$.set(true);
     this.idInterval = setInterval(() => {
       if (this._seconds$() > 0) return this._seconds$.update((sec) => sec - 1);
