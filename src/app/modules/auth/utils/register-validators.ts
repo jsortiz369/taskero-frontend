@@ -12,7 +12,7 @@ export const existUsername = (authService: Auth): AsyncValidatorFn => {
       switchMap(() =>
         authService.registerConflictUsername(control.value).pipe(
           map((response: ResponseRegisterConflict) => {
-            return response.exist ? { usernameExists: 'Ya existe un usuario con este nombre de usuario.' } : null;
+            return response.exist ? { usernameExists: 'Usuario ya registrado.' } : null;
           }),
           catchError((error: HttpErrorResponse | ZodError) => {
             if (!(error instanceof HttpErrorResponse)) error.issues.forEach((issue) => console.log(issue.message));

@@ -19,41 +19,47 @@
         <p class="text-(--p-surface-500) dark:text-(--p-surface-400) text-lg">Gestione sus proyectos con facilidad.</p>
     </div>
     <form class="flex flex-wrap -mx-2" autocomplete="off" [formGroup]="_formLogin$" (ngSubmit)="login()">
-        <div class="w-full px-2 mb-2">
+        <div class="w-full px-2 mb-3">
             <p-floatlabel variant="on">
-                <input
-                    pInputText
-                    id="username"
-                    autocomplete="one-time-code"
-                    formControlName="username"
-                    pSize="large"
-                    fluid
-                />
+                <p-iconfield>
+                    <p-inputicon class="pi pi-user" />
+                    <input
+                        pInputText
+                        id="username"
+                        autocomplete="one-time-code"
+                        formControlName="username"
+                        pSize="large"
+                        fluid
+                    />
+                </p-iconfield>
                 <label for="username">Nombre de usuario<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
             </p-floatlabel>
         </div>
 
-        <div class="w-full px-2 mb-2">
+        <div class="w-full px-2 mb-3">
             <p-floatlabel variant="on">
-                <p-password
-                    inputId="password"
-                    [toggleMask]="true"
-                    [feedback]="false"
-                    formControlName="password"
-                    fluid
-                    size="large"
-                />
+                <p-iconfield>
+                    <p-inputicon class="pi pi-lock" />
+                    <p-password
+                        inputId="password"
+                        [toggleMask]="true"
+                        [feedback]="false"
+                        formControlName="password"
+                        fluid
+                        size="large"
+                    />
+                </p-iconfield>
                 <label for="password">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
             </p-floatlabel>
         </div>
 
         @if(_messageError$()){
-            <div class="w-full px-2 mb-2">
+            <div class="w-full px-2 mb-3">
                 <app-control-error [text]="_messageError$()"] />
             </div>
         }
 
-        <div class="w-full px-2 mb-2">
+        <div class="w-full px-2 mb-3">
             <p-button
                 type="submit"
                 label="Iniciar sesión"

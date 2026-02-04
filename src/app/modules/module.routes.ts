@@ -14,5 +14,6 @@ export default [
     path: '',
     canActivate: [loggedInGuard],
     loadComponent: () => import('../layout/components/layout/layout').then((m) => m.Layout),
+    loadChildren: () => import('./children-modules.routes'),
   },
 ] as Routes;

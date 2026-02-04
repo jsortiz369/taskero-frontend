@@ -41,11 +41,42 @@ export class ControlFormReactive implements OnInit, OnDestroy {
     this.componentRef.setInput('text', messageError);
 
     const parentElement: HTMLElement | null = this.elementRef.nativeElement;
-    const elementRef = parentElement.tagName !== 'INPUT' ? parentElement.querySelector('input') : parentElement;
-
     // append element message
     let appendNode: ParentNode | null | undefined = null;
-    const float = parentElement.parentElement?.classList.contains('p-floatlabel');
+    const iconField = parentElement.parentElement?.classList.contains('p-iconfield');
+    if (iconField) {
+      const float = parentElement.parentElement?.parentElement?.classList.contains('p-floatlabel');
+      if (float) {
+        const group = parentElement.parentElement?.parentElement;
+        if (group?.classList.contains('p-inputgroup')) appendNode = group.parentNode?.parentNode;
+        else appendNode = group?.parentNode;
+      } else {
+        appendNode = parentElement.parentNode?.parentNode;
+      }
+      console.log('group', appendNode);
+    } else {
+      const float = parentElement.parentElement?.classList.contains('p-floatlabel');
+      if (float) {
+        const group = parentElement.parentElement;
+        if (group?.classList.contains('p-inputgroup')) appendNode = group.parentNode?.parentNode;
+        else appendNode = group?.parentNode;
+      } else {
+        appendNode = parentElement.parentNode;
+      }
+    }
+
+    if (messageError) {
+      appendNode?.querySelectorAll('input').forEach((input) => input.classList.add('ng-invalid', 'ng-touched', 'ng-dirty'));
+      if (appendNode) appendNode.appendChild(this.componentRef.location.nativeElement);
+      return;
+    }
+
+    appendNode?.querySelectorAll('input').forEach((input) => input.classList.remove('ng-invalid'));
+    const elementError = String(this.componentRef.location.nativeElement.tagName).toLowerCase();
+    const existElementError = appendNode?.querySelector(elementError);
+    if (existElementError && existElementError.parentNode === appendNode) appendNode?.removeChild(existElementError);
+
+    /* const float = parentElement.parentElement?.classList.contains('p-floatlabel');
     if (float) {
       const group = parentElement.parentElement;
       if (group?.classList.contains('p-inputgroup')) appendNode = group.parentNode?.parentNode;
@@ -71,7 +102,7 @@ export class ControlFormReactive implements OnInit, OnDestroy {
     if (otp) {
       parentElement.querySelectorAll('input').forEach((input) => {
         input.classList.remove('ng-invalid');
-      });
+      });                                       
     } else {
       elementRef?.classList.remove('ng-invalid');
     }
@@ -81,7 +112,7 @@ export class ControlFormReactive implements OnInit, OnDestroy {
 
     if (existElementError && existElementError.parentNode === appendNode) {
       if (appendNode) appendNode.removeChild(existElementError);
-    }
+    } */
   }
 
   private ControlErros(): string | null {

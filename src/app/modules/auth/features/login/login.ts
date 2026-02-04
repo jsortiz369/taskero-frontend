@@ -3,9 +3,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
-import { keyof, ZodError } from 'zod';
+import { ZodError } from 'zod';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 import { AppModule } from '../../../../app.module';
 import { Auth } from '../../services';
@@ -19,7 +21,7 @@ import { LoginModel, ResponseLogin } from '../../models/login';
 
 @Component({
   selector: 'app-login',
-  imports: [AppModule, PasswordModule, ButtonModule, ControlMessageError],
+  imports: [AppModule, IconFieldModule, InputIconModule, PasswordModule, ButtonModule, ControlMessageError],
   templateUrl: './login.html',
 })
 export class Login {

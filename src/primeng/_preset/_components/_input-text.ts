@@ -1,4 +1,3 @@
-import { StyleOptions } from '@primeuix/themes';
 import { InputTextDesignTokens } from '@primeuix/themes/types/inputtext';
 
 export const _INPUT_TEXT: InputTextDesignTokens = {

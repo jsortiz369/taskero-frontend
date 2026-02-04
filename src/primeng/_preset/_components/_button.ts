@@ -397,7 +397,7 @@ export const _BUTTON: ButtonDesignTokens = {
           hoverBackground: 'rgba(255,255,255,0.04)',
           activeBackground: 'rgba(255,255,255,0.16)',
           borderColor: '{surface.700}',
-          color: '{surface.400}',
+          color: '{surface.500}',
         },
         success: {
           hoverBackground: 'color-mix(in srgb, {green.400}, transparent 96%)',

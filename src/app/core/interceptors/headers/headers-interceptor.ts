@@ -29,7 +29,7 @@ const authInterceptor: HttpInterceptorFn = (req, next) => {
   const url = req.url;
 
   // TODO: is not confirm account endpoint
-  if (url !== `${baseUrl}/auth/confirm-account`) return next(req);
+  if (url !== `${baseUrl}/auth/confirm` && url !== `${baseUrl}/auth/resend-confirmation-token`) return next(req);
 
   const _loggedInUser$ = inject(LoggedInUser);
   const tokenConfirm = _loggedInUser$.isValidJwtToken(EnumStorage.CONFIRM_ACCOUNT);

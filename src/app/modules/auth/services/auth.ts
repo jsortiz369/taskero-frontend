@@ -6,7 +6,8 @@ import { environment } from '../../../../environments/environment';
 import { RegisterForm, ResponseRegister, ResponseRegisterConflict } from '../models/register';
 import { registerSchema, registerConflictSchema } from '../schemas/register.schemas';
 import { LoginForm, ResponseLogin } from '../models/login';
-import { validLoginSchema } from '../schemas/login.schema';
+import { loginSchema, validLoginSchema } from '../schemas/login.schema';
+import { ResponseConfirm } from '../models/confirm';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +17,6 @@ export class Auth {
   private readonly _urlBase$ = environment.urlBase;
 
   constructor() {}
-
-  login(login: LoginForm): Observable<ResponseLogin> {
-    return this._http$.post(`${this._urlBase$}/auth/login`, login).pipe(map((res) => validLoginSchema.parse(res)));
-  }
 
   registerConflictUsername(username: string): Observable<ResponseRegisterConflict> {
     return this._http$
@@ -43,7 +40,15 @@ export class Auth {
     return this._http$.post<ResponseRegister>(`${this._urlBase$}/auth/register`, register).pipe(map((res) => registerSchema.parse(res)));
   }
 
-  confirmAccount(token: string) {
-    return this._http$.post(`${this._urlBase$}/auth/confirm-account`, { token });
+  login(login: LoginForm): Observable<ResponseLogin> {
+    return this._http$.post(`${this._urlBase$}/auth/login`, login).pipe(map((res) => validLoginSchema.parse(res)));
+  }
+
+  confirmAccount(token: string): Observable<ResponseConfirm> {
+    return this._http$.post(`${this._urlBase$}/auth/confirm`, { otp: token }).pipe(map((res) => loginSchema.parse(res)));
+  }
+
+  resendConfirmationToken() {
+    return this._http$.post(`${this._urlBase$}/auth/resend-confirmation-token`, {});
   }
 }
