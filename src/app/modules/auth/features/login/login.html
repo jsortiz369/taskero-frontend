@@ -28,7 +28,6 @@
                     id="username"
                     autocomplete="one-time-code"
                     formControlName="username"
-                    pSize="large"
                     fluid
                 />
             </p-iconfield>
@@ -46,7 +45,6 @@
                     [feedback]="false"
                     formControlName="password"
                     fluid
-                    size="large"
                 />
             </p-iconfield>
             <label for="password">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
@@ -65,7 +63,6 @@
             label="Iniciar sesión"
             icon="pi pi-arrow-right"
             iconPos="right"
-            size="large"
             fluid
             [loading]="_loadingLogin$()"
             [disabled]="!_formLogin$.valid || _disabledLogin$()"
@@ -73,7 +70,7 @@
     </div>
 
     <div class="w-full px-2 mb-2 text-end">
-        <p-button routerLink="/auth/password-recover" link size="small" label="¿Olvidó su contraseña?" styleClass="p-0!"/>
+        <p-button routerLink="/auth/recover-password" link size="small" label="¿Olvidó su contraseña?" styleClass="p-0!"/>
     </div>
 </form>
 

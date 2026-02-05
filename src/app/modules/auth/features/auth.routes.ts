@@ -14,8 +14,12 @@ export default [
     loadComponent: () => import('./confirm-account/confirm-account').then((m) => m.ConfirmAccount),
   },
   {
-    path: 'password-recover',
-    loadComponent: () => import('./password-recovery/password-recovery').then((m) => m.PasswordRecovery),
+    path: 'recover-password',
+    loadComponent: () => import('./recover-password/recover-password').then((m) => m.RecoverPassword),
+  },
+  {
+    path: 'reset-password/:token',
+    loadComponent: () => import('./reset-password/reset-password').then((m) => m.ResetPassword),
   },
   {
     path: '**',

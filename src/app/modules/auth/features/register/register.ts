@@ -9,6 +9,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 import { RegisterModel } from '../../models/register';
 import { AppModule } from '../../../../app.module';
@@ -31,7 +33,7 @@ const VALIDATOR = [
 
 @Component({
   selector: 'app-register',
-  imports: [AppModule, DividerModule, ButtonModule, InputMaskModule, PasswordModule, KeyFilterModule],
+  imports: [AppModule, IconFieldModule, InputIconModule, DividerModule, ButtonModule, InputMaskModule, PasswordModule, KeyFilterModule],
   templateUrl: './register.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

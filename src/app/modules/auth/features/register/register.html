@@ -21,123 +21,137 @@
 <form class="flex flex-wrap -mx-2" autocomplete="off" [formGroup]="_formRegister$" (ngSubmit)="register()">
     <div class="w-full sm:w-6/12 px-2 mb-3">
         <p-floatlabel variant="on">
-            <input
-                pInputText
-                [pKeyFilter]="_textRegex$()"
-                id="names"
-                autocomplete="one-time-code"
-                formControlName="names"
-                pSize="large"
-                fluid
-            />
+            <p-iconfield>
+                <p-inputicon class="pi pi-address-book" />
+                <input
+                    pInputText
+                    [pKeyFilter]="_textRegex$()"
+                    id="names"
+                    autocomplete="one-time-code"
+                    formControlName="names"
+                    fluid
+                />
+            </p-iconfield>
             <label for="names">Nombres<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
         </p-floatlabel>
     </div>
 
     <div class="w-full sm:w-6/12 px-2 mb-3">
         <p-floatlabel variant="on">
-            <input
-                pInputText
-                [pKeyFilter]="_textRegex$()"
-                id="surnames"
-                autocomplete="one-time-code"
-                formControlName="surnames"
-                pSize="large"
-                fluid
-            />
+            <p-iconfield>
+                <p-inputicon class="pi pi-address-book" />
+                <input
+                    pInputText
+                    [pKeyFilter]="_textRegex$()"
+                    id="surnames"
+                    autocomplete="one-time-code"
+                    formControlName="surnames"
+                    fluid
+                />
+            </p-iconfield>
             <label for="surnames">Apellidos<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
         </p-floatlabel>
     </div>
 
     <div class="w-full sm:w-6/12 px-2 mb-3">
         <p-floatlabel variant="on">
-            <input
-                pInputText
-                [pKeyFilter]="_usernameRegex$()"
-                id="username"
-                autocomplete="one-time-code"
-                formControlName="username"
-                pSize="large"
-                fluid
-            />
+            <p-iconfield>
+                <p-inputicon class="pi pi-user" />
+                <input
+                    pInputText
+                    [pKeyFilter]="_usernameRegex$()"
+                    id="username"
+                    autocomplete="one-time-code"
+                    formControlName="username"
+                    fluid
+                />
+            </p-iconfield>
             <label for="username">Nombre de usuario<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
         </p-floatlabel>
     </div>
 
     <div class="w-full sm:w-6/12 px-2 mb-3">
         <p-floatlabel variant="on">
-            <p-inputmask
-                inputId="phone"
-                mask="(+57) 999-9999-999" 
-                formControlName="phone"
-                fluid
-                size="large"
-                type="tel"
-            />
+            <p-iconfield>
+                <p-inputicon class="pi pi-mobile" />
+                <p-inputmask
+                    inputId="phone"
+                    mask="(+57) 999-9999-999" 
+                    formControlName="phone"
+                    fluid
+                    type="tel"
+                />
+            </p-iconfield>
             <label for="phone">Teléfono<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
         </p-floatlabel>
     </div>
 
     <div class="w-full px-2 mb-3">
         <p-floatlabel variant="on">
-            <input
-                pInputText
-                id="email"
-                autocomplete="one-time-code"
-                formControlName="email"
-                pSize="large"
-                fluid
-            />
+            <p-iconfield>
+                <p-inputicon class="pi pi-envelope" />
+                <input
+                    pInputText
+                    id="email"
+                    autocomplete="one-time-code"
+                    formControlName="email"
+                    fluid
+                />
+            </p-iconfield>
             <label for="username">Correo<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
         </p-floatlabel>
     </div>
 
     <div class="w-full px-2 mb-3">
         <p-floatlabel variant="on">
-            <p-password 
-                inputId="password"
-                formControlName="password"
-                toggleMask
-                fluid
-                promptLabel="Ingrese una contraseña"
-                weakLabel="Contraseña muy debil"
-                mediumLabel="Contraseña media"
-                strongLabel="Contraseña fuerte"
-                [mediumRegex]="_mediumPassword$()"
-                [strongRegex]="_strongPassword$()"
-                appendTo="body"
-                size="large"
-            >
-                <ng-template #header>
-                    <div class="font-semibold text-xm mb-4">Nivel de complejidad</div>
-                </ng-template>
+            <p-iconfield>
+                <p-inputicon class="pi pi-lock" />
+                <p-password 
+                    inputId="password"
+                    formControlName="password"
+                    toggleMask
+                    fluid
+                    promptLabel="Ingrese una contraseña"
+                    weakLabel="Contraseña muy debil"
+                    mediumLabel="Contraseña media"
+                    strongLabel="Contraseña fuerte"
+                    [mediumRegex]="_mediumPassword$()"
+                    [strongRegex]="_strongPassword$()"
+                    appendTo="body"
+                >
+                    <ng-template #header>
+                        <div class="font-semibold text-sm mb-2">Nivel de complejidad</div>
+                    </ng-template>
 
-                <ng-template #footer>
-                    <p-divider />
-                    <ul class="pl-2 my-0 leading-normal">
-                        <li>Mínimo 8 caracteres</li>
-                        <li>Al menos 1 minúscula</li>
-                        <li>Al menos 1 mayúscula</li>
-                        <li>Al menos 1 número</li>
-                        <li>Al menos 1 carácter especial</li>
-                    </ul>
-                </ng-template>
-            </p-password>
+                    <ng-template #footer>
+                        <p-divider />
+                        <ul class="pl-2 my-0 leading-normal text-sm">
+                            <li>Mínimo 8 caracteres</li>
+                            <li>Al menos 1 minúscula</li>
+                            <li>Al menos 1 mayúscula</li>
+                            <li>Al menos 1 número</li>
+                            <li>Al menos 1 carácter especial</li>
+                        </ul>
+                    </ng-template>
+                </p-password>
+            </p-iconfield>
             <label for="password">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
         </p-floatlabel>
     </div>
 
     <div class="w-full px-2 mb-3">
         <p-floatlabel variant="on">
-            <p-password
-                inputId="passwordConfirm"
-                formControlName="passwordConfirm"
-                [toggleMask]="true"
-                [feedback]="false"
-                fluid
-                size="large"
-            />
-            <label for="passwordConfirm">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+            <p-iconfield>
+                <p-inputicon class="pi pi-lock" />
+                <p-password
+                    inputId="passwordConfirm"
+                    formControlName="passwordConfirm"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                    fluid
+                />
+            </p-iconfield>
+            <label for="passwordConfirm">Confirmar contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
         </p-floatlabel>
     </div>
 
@@ -150,7 +164,6 @@
             fluid
             [disabled]="!_formRegister$.valid"
             [loading]="_loadingRegister$()"
-            size="large"
         />
     </div>
 </form>

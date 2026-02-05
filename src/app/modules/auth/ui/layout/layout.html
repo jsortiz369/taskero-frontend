@@ -2,22 +2,22 @@
     <div class="flex w-full min-h-screen overflow-hidden">
         @if(_size$() === 'large'){
             <div class="fixed flex lg:w-6/12 xl:w-7/12 h-screen items-center justify-center p-12 bg-(--p-primary-color) dark:bg-(--p-surface-600) bg-[radial-gradient(circle_at_3px_3px,color-mix(in_srgb,var(--p-surface-100)_30%,transparent)_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_3px_3px,color-mix(in_srgb,var(--p-primary-color)_30%,transparent)_1px,transparent_0)] bg-size-[24px_24px]">
-                <div class="p-5 rounded-lg dark:border dark:border-solid dark:border-(--p-primary-color)/20 bg-(--p-primary-200)/90 dark:bg-(--p-surface-700)/90" [style]="{'max-width': '32rem', width: '100%',}">
+                <div class="p-5 rounded-lg dark:border dark:border-solid dark:border-(--p-primary-color)/20 bg-(--p-primary-50)/80 dark:bg-(--p-surface-700)/90" [style]="{'max-width': '32rem', width: '100%',}">
                     <div class="flex gap-2 mb-6">
                         <div class="h-3 w-3 rounded-full bg-(--p-primary-color)/80"></div>
-                        <div class="h-3 w-3 rounded-full bg-(--p-primary-color)/60"></div>
                         <div class="h-3 w-3 rounded-full bg-(--p-primary-color)/40"></div>
+                        <div class="h-3 w-3 rounded-full bg-(--p-primary-color)/20"></div>
                     </div>
                     <div class="space-y-4">
                         <div class="flex gap-4">
                             <div class="h-26 w-1/3 bg-(--p-primary-color)/60 rounded-lg animate-pulse" style="animation-duration: 3s;"></div>
-                            <div class="h-26 w-1/3 bg-(--p-primary-color)/50 rounded-lg"></div>
-                            <div class="h-26 w-1/3 bg-(--p-primary-color)/40 rounded-lg border border-(--p-primary-color)/10"></div>
+                            <div class="h-26 w-1/3 bg-(--p-primary-color)/40 rounded-lg"></div>
+                            <div class="h-26 w-1/3 bg-(--p-primary-color)/20 rounded-lg border border-(--p-primary-color)/10"></div>
                         </div>
-                        <div class="h-14 w-full bg-(--p-primary-color)/40 rounded-lg"></div>
+                        <div class="h-14 w-full bg-(--p-primary-color)/20 rounded-lg"></div>
                         <div class="flex gap-4">
-                            <div class="h-16 w-1/2 bg-(--p-primary-color)/30 rounded-lg"></div>
-                            <div class="h-16 w-1/2 bg-(--p-primary-color)/60 rounded-lg animate-pulse" style="animation-duration: 4s;"></div>
+                            <div class="h-16 w-1/2 bg-(--p-primary-color)/20 rounded-lg"></div>
+                            <div class="h-16 w-1/2 bg-(--p-primary-color)/40 rounded-lg animate-pulse" style="animation-duration: 4s;"></div>
                         </div>
                     </div>
                     <div class="mt-12">
@@ -30,11 +30,11 @@
         }
 
         <div 
-            class="absolute right-0 min-h-dvh flex flex-col items-center justify-center"
+            class="absolute right-0  min-h-dvh flex flex-col items-center justify-center"
             [ngClass]="_size$() == 'large' ? 'lg:w-6/12 xl:w-5/12' : _size$() == 'medium' ? 'w-full p-8 bg-(--p-primary-color) dark:bg-(--p-surface-600) bg-[radial-gradient(circle_at_3px_3px,color-mix(in_srgb,var(--p-surface-100)_30%,transparent)_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_3px_3px,color-mix(in_srgb,var(--p-primary-color)_30%,transparent)_1px,transparent_0)] bg-size-[24px_24px]' : 'w-full'"
         >
             <p-card
-                [ngClass]="_size$() == 'large' ? 'w-full h-dvh flex! flex-col justify-center p-8 rounded-none! overflow-y-auto' : _size$() == 'medium' ? 'max-w-md dark:border dark:border-solid dark:border-(--p-primary-color)/20':'w-full h-dvh grid! items-center rounded-none! overflow-y-auto py-8 sm:px-24'"
+                [ngClass]="_size$() == 'large' ? 'w-full h-full min-h-dvh grid! items-center px-8 py-10 rounded-none! overflow-y-auto' : _size$() == 'medium' ? 'max-w-md dark:border dark:border-solid dark:border-(--p-primary-color)/20':'w-full h-dvh grid! items-center rounded-none! overflow-y-auto py-8 sm:px-24'"
             >
                 <router-outlet />
             </p-card>
