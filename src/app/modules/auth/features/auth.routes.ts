@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 
-import { confirmAccountGuard } from '../../../core/guards';
-
 export default [
   {
     path: 'login',
@@ -14,6 +12,10 @@ export default [
   {
     path: 'confirm-account',
     loadComponent: () => import('./confirm-account/confirm-account').then((m) => m.ConfirmAccount),
+  },
+  {
+    path: 'password-recover',
+    loadComponent: () => import('./password-recovery/password-recovery').then((m) => m.PasswordRecovery),
   },
   {
     path: '**',

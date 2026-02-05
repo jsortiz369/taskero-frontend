@@ -7,73 +7,73 @@
         </span>
         <span class="text-2xl font-bold tracking-tight">Taskero</span>
     </div>
-    <div>
-        <span class="text-gray-500 dark:text-gray-400 mr-1">¿Nuevo aquí?</span>
-        <p-button routerLink="/auth/register" link label="Registrarse" styleClass="p-0!"/>
+    <div class="text-sm">
+        <span class="text-(--p-surface-500) dark:text-(--p-surface-300) mr-1">¿Nuevo aquí?</span>
+        <p-button routerLink="/auth/register" link label="Registrarme" size="small" styleClass="p-0!"/>
     </div>
 </div>
 
-<div class="max-w-md w-full mx-auto">
-    <div class="mb-8 text-center">
-        <h1 class="text-4xl font-bold leading-tight">Iniciar sesión</h1>
-        <p class="text-(--p-surface-500) dark:text-(--p-surface-400) text-lg">Gestione sus proyectos con facilidad.</p>
-    </div>
-    <form class="flex flex-wrap -mx-2" autocomplete="off" [formGroup]="_formLogin$" (ngSubmit)="login()">
-        <div class="w-full px-2 mb-3">
-            <p-floatlabel variant="on">
-                <p-iconfield>
-                    <p-inputicon class="pi pi-user" />
-                    <input
-                        pInputText
-                        id="username"
-                        autocomplete="one-time-code"
-                        formControlName="username"
-                        pSize="large"
-                        fluid
-                    />
-                </p-iconfield>
-                <label for="username">Nombre de usuario<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
-            </p-floatlabel>
-        </div>
-
-        <div class="w-full px-2 mb-3">
-            <p-floatlabel variant="on">
-                <p-iconfield>
-                    <p-inputicon class="pi pi-lock" />
-                    <p-password
-                        inputId="password"
-                        [toggleMask]="true"
-                        [feedback]="false"
-                        formControlName="password"
-                        fluid
-                        size="large"
-                    />
-                </p-iconfield>
-                <label for="password">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
-            </p-floatlabel>
-        </div>
-
-        @if(_messageError$()){
-            <div class="w-full px-2 mb-3">
-                <app-control-error [text]="_messageError$()"] />
-            </div>
-        }
-
-        <div class="w-full px-2 mb-3">
-            <p-button
-                type="submit"
-                label="Iniciar sesión"
-                icon="pi pi-arrow-right"
-                iconPos="right"
-                size="large"
-                fluid
-                [loading]="_loadingLogin$()"
-                [disabled]="!_formLogin$.valid || _disabledLogin$()"
-            />
-        </div>
-
-        <div class="w-full px-2 mb-2 text-end">
-            <p-button routerLink="/auth/register" link label="¿Olvidó su contraseña?" size="small" styleClass="p-0!"/>
-        </div>
-    </form>
+<div class="mb-8 text-center">
+    <h1 class="text-4xl font-bold leading-tight">Iniciar sesión</h1>
+    <p class="text-(--p-surface-500) dark:text-(--p-surface-300) text-lg">Gestione sus proyectos con facilidad.</p>
 </div>
+
+<form class="flex flex-wrap -mx-2" autocomplete="off" [formGroup]="_formLogin$" (ngSubmit)="login()">
+    <div class="w-full px-2 mb-3">
+        <p-floatlabel variant="on">
+            <p-iconfield>
+                <p-inputicon class="pi pi-user" />
+                <input
+                    pInputText
+                    id="username"
+                    autocomplete="one-time-code"
+                    formControlName="username"
+                    pSize="large"
+                    fluid
+                />
+            </p-iconfield>
+            <label for="username">Nombre de usuario<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+        </p-floatlabel>
+    </div>
+
+    <div class="w-full px-2 mb-3">
+        <p-floatlabel variant="on">
+            <p-iconfield>
+                <p-inputicon class="pi pi-lock" />
+                <p-password
+                    inputId="password"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                    formControlName="password"
+                    fluid
+                    size="large"
+                />
+            </p-iconfield>
+            <label for="password">Contraseña<span class="text-(--p-inputtext-invalid-border-color)">*</span></label>
+        </p-floatlabel>
+    </div>
+
+    @if(_messageError$()){
+        <div class="w-full px-2 mb-3">
+            <app-control-error [text]="_messageError$()"] />
+        </div>
+    }
+
+    <div class="w-full px-2 mb-3">
+        <p-button
+            type="submit"
+            label="Iniciar sesión"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            size="large"
+            fluid
+            [loading]="_loadingLogin$()"
+            [disabled]="!_formLogin$.valid || _disabledLogin$()"
+        />
+    </div>
+
+    <div class="w-full px-2 mb-2 text-end">
+        <p-button routerLink="/auth/password-recover" link size="small" label="¿Olvidó su contraseña?" styleClass="p-0!"/>
+    </div>
+</form>
+

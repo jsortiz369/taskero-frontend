@@ -49,14 +49,14 @@ export const _BUTTON: ButtonDesignTokens = {
           },
         },
         secondary: {
-          background: '{surface.600}',
-          hoverBackground: '{surface.700}',
+          background: '{surface.100}',
+          hoverBackground: '{surface.200}',
           activeBackground: '{surface.300}',
           borderColor: '{surface.100}',
           hoverBorderColor: '{surface.200}',
           activeBorderColor: '{surface.300}',
-          color: '{surface.950}',
-          hoverColor: '{surface.500}',
+          color: '{surface.600}',
+          hoverColor: '{surface.700}',
           activeColor: '{surface.800}',
           focusRing: {
             color: '{surface.600}',
@@ -388,14 +388,14 @@ export const _BUTTON: ButtonDesignTokens = {
       },
       outlined: {
         primary: {
-          hoverBackground: 'color-mix(in srgb, {primary.color}, transparent 96%)',
-          activeBackground: 'color-mix(in srgb, {primary.color}, transparent 84%)',
+          hoverBackground: '{primary.color}',
+          activeBackground: '{primary.color}',
           borderColor: '{primary.700}',
           color: '{primary.color}',
         },
         secondary: {
-          hoverBackground: 'rgba(255,255,255,0.04)',
-          activeBackground: 'rgba(255,255,255,0.16)',
+          hoverBackground: '{surface.700}',
+          activeBackground: '{surface.700}',
           borderColor: '{surface.700}',
           color: '{surface.500}',
         },

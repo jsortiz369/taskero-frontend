@@ -1,4 +1,5 @@
 import { HostListener, Injectable, signal } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,6 +8,8 @@ export class LayoutService {
   private readonly darkMode = signal(false);
   private readonly showMenu = signal(false);
   private readonly visibleMenu = signal(false);
+
+  readonly theme$ = new BehaviorSubject<'dark' | 'light'>('light');
 
   constructor() {}
 
@@ -38,9 +41,11 @@ export class LayoutService {
     if (document.documentElement.classList.contains('taskero-dark')) {
       document.documentElement.classList.remove('taskero-dark');
       this.darkMode.set(false);
+      this.theme$.next('light');
     } else {
       document.documentElement.classList.add('taskero-dark');
       this.darkMode.set(true);
+      this.theme$.next('dark');
     }
   }
 

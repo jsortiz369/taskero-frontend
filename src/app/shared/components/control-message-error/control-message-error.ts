@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'app-control-error',
   template: `
     @if (text()) {
-      <small class="text-(--p-inputtext-invalid-border-color) flex items-center gap-0.5 mt-0.5"
+      <small class="text-(--p-inputtext-invalid-border-color) flex items-center gap-0.5 mt-1 text-xs"
         ><i class="pi pi-info-circle" style="font-size: 120%;"></i> {{ text() }}</small
       >
     }

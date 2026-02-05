@@ -15,9 +15,8 @@ import { LayoutService } from '../../../../layout/services/layout.service';
 export class Layout implements OnInit {
   protected readonly _layoutService$ = inject(LayoutService);
 
-  protected readonly _detailInfo$ = signal(false);
-  protected readonly _cardInfo$ = signal(false);
-  protected readonly _cardInfoFullScreen$ = signal(false);
+  protected readonly _size$ = signal<'small' | 'medium' | 'large'>('medium');
+
   constructor() {
     //const base = '#2866eb'; // blue 500
     //const base = '#ff00ff'; // fuchsia 500
@@ -64,14 +63,8 @@ export class Layout implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event?: any) {
     const width = event?.target?.innerWidth ?? window.innerWidth;
-    if (width >= 1024) {
-      this._cardInfo$.set(false);
-      this._detailInfo$.set(true);
-    } else {
-      this._cardInfo$.set(true);
-      this._detailInfo$.set(false);
-      if (width < 480) this._cardInfoFullScreen$.set(true);
-      else this._cardInfoFullScreen$.set(false);
-    }
+    if (width >= 1024) this._size$.set('large');
+    else if (width >= 768) this._size$.set('medium');
+    else this._size$.set('small');
   }
 }
