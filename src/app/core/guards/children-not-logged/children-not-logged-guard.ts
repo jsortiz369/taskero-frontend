@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateChildFn, Router } from '@angular/router';
 
-import { LoaderService } from '../../../shared/services/loader.service';
+import { LoaderCustom } from '../../../shared/services/loader-custom';
 import { CoreStorage } from '../../services/core-storage/core-storage';
 import { EnumStorage } from '../../models/storage.model';
 import { LoggedInUser } from '../../services/logged-in-user/logged-in-user';
@@ -10,7 +10,7 @@ import { delay, finalize, of } from 'rxjs';
 export const childrenNotLoggedGuard: CanActivateChildFn = (childRoute, state) => {
   const _router$ = inject(Router);
   const _storage$ = inject(CoreStorage);
-  const _loader$ = inject(LoaderService);
+  const _loaderCustom$ = inject(LoaderCustom);
 
   const tokenConfirm = _storage$.getItem(EnumStorage.CONFIRM_ACCOUNT);
   if (state.url.includes('/auth/confirm-account')) {
@@ -24,9 +24,9 @@ export const childrenNotLoggedGuard: CanActivateChildFn = (childRoute, state) =>
   if (state.url.includes('/auth/confirm-account')) {
   }
 
-  _loader$.visible = true;
+  _loaderCustom$.loaderChangeView = true;
   return of(true).pipe(
     delay(500),
-    finalize(() => (_loader$.visible = false)),
+    finalize(() => (_loaderCustom$.loaderChangeView = false)),
   );
 };

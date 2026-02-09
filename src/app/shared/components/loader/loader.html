@@ -1,19 +1,19 @@
-@if(_loaderService$.getVisible){
-  <div class="loader-overlay fixed">
-    <div class="loader-spinner"></div>
-  </div>
+@if(loaderChangeView$()){
+    <div class="fixed inset-0 flex items-center justify-center bg-(--p-primary-300)/90 dark:bg-(--p-surface-300)/85 z-9999">
+        <div class="h-66 bg-(--p-surface-200) dark:bg-(--p-surface-500) p-3 rounded-xl border border-(--p-surface-100) dark:border-(--p-surface-600)">
+            <div class="grid grid-cols-3 gap-6">
+                <div class="w-24 rounded-xl bg-(--p-primary-400) overflow-hidden animate-move-1"></div>
+            
+                <div class="w-24 rounded-xl bg-(--p-primary-400) overflow-hidden animate-move-2"></div>
+            
+                <div class="w-24 rounded-xl bg-(--p-primary-400) overflow-hidden animate-move-3"></div>
+            </div>
+        </div>
+    </div>
 }
 
-<div class="fixed inset-0 flex items-center justify-center bg-(--p-primary-200) dark:bg-(--p-surface-400) z-9999">
-  <div class="h-66 bg-(--p-surface-200) dark:bg-(--p-surface-500)/50 p-3 rounded-xl">
-    <div class="grid grid-cols-3 gap-6">
-
-      <div class="w-24 rounded-xl bg-(--p-primary-400) overflow-hidden animate-move-1"></div>
-  
-      <div class="w-24 rounded-xl bg-(--p-primary-400) overflow-hidden animate-move-2"></div>
-  
-      <div class="w-24 rounded-xl bg-(--p-primary-400) overflow-hidden animate-move-3"></div>
+@if(loader$()){
+    <div class="loader-overlay fixed">
+        <div class="loader-spinner"></div>
     </div>
-  </div>
-</div>
-
+}
