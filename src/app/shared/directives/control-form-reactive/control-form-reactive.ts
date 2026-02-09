@@ -53,7 +53,6 @@ export class ControlFormReactive implements OnInit, OnDestroy {
       } else {
         appendNode = parentElement.parentNode?.parentNode;
       }
-      console.log('group', appendNode);
     } else {
       const float = parentElement.parentElement?.classList.contains('p-floatlabel');
       if (float) {

@@ -11,7 +11,7 @@ type ToastMessageOptions = Omit<ToastMessageOptionsPNG, 'severity'> & {
 @Injectable({
   providedIn: 'root',
 })
-export class Toast {
+export class AlertsCustom {
   private readonly _messageService$ = inject(MessageService);
 
   toast(data: ToastMessageOptions) {

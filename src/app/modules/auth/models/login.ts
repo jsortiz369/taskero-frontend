@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 import z from 'zod';
 
-import { validLoginSchema } from '../schemas/login.schema';
+import { validLoginSchema } from '../schemas/login';
 
 export type LoginModel = {
   username: FormControl<string>;

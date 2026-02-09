@@ -18,7 +18,7 @@ export default [
     loadComponent: () => import('./recover-password/recover-password').then((m) => m.RecoverPassword),
   },
   {
-    path: 'reset-password/:token',
+    path: 'reset-password',
     loadComponent: () => import('./reset-password/reset-password').then((m) => m.ResetPassword),
   },
   {

@@ -11,9 +11,9 @@ import { InputIconModule } from 'primeng/inputicon';
 
 import { AppModule } from '../../../../app.module';
 import { Auth } from '../../services';
-import { Toast } from '../../../../shared/services/toast';
+import { AlertsCustom } from '../../../../shared/services/alerts-custom';
 import { ValidatorReactive } from '../../../../shared/utils/validator-reactive';
-import { HttepErrors } from '../../../../shared/models/http-erros';
+import { HttpErrors } from '../../../../shared/models/http-erros';
 import { ControlMessageError } from '../../../../shared/components/control-message-error/control-message-error';
 import { CoreStorage } from '../../../../core/services/core-storage/core-storage';
 import { EnumStorage } from '../../../../core/models/storage.model';
@@ -26,7 +26,7 @@ import { LoginModel, ResponseLogin } from '../../models/login';
 })
 export class Login {
   private readonly _fb$ = inject(FormBuilder);
-  private readonly _toast$ = inject(Toast);
+  private readonly _alertsCustom$ = inject(AlertsCustom);
   private readonly _auth$ = inject(Auth);
   private readonly _storage$ = inject(CoreStorage);
   private readonly _router$ = inject(Router);
@@ -70,13 +70,13 @@ export class Login {
             return;
           }
 
-          const errors = error.error as HttepErrors;
+          const errors = error.error as HttpErrors;
           if (error.status === 400) {
             const message = errors.error.message;
             const detail = Array.isArray(message) ? message.join('\n') : message;
-            this._toast$.toast({ severity: 'error', summary: 'Error', detail: detail });
+            this._alertsCustom$.toast({ severity: 'error', summary: 'Error', detail: detail });
           } else if (error.status === 423) {
-            this._toast$.toast({ severity: 'warn', summary: 'Advertencia', detail: String(errors.error.message) });
+            this._alertsCustom$.toast({ severity: 'warn', summary: 'Advertencia', detail: String(errors.error.message) });
           } else if (error.status === 401) {
             this._disabledLogin$.set(true);
             this._messageError$.set(String(errors.error.message));

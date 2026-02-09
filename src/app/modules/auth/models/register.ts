@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { registerSchema, registerConflictSchema } from '../schemas/register.schemas';
+import { registerSchema, registerConflictSchema } from '../schemas/register';
 import z from 'zod';
 
 export type RegisterModel = {

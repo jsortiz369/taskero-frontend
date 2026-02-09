@@ -18,8 +18,8 @@ import { REGEX } from '../../../../shared/constants/regex';
 import { ValidatorReactive } from '../../../../shared/utils/validator-reactive';
 import { existEmail, existPhone, existUsername, matchPassword } from '../../utils/register-validators';
 import { Auth } from '../../services';
-import { Toast } from '../../../../shared/services/toast';
-import { HttepErrors } from '../../../../shared/models/http-erros';
+import { AlertsCustom } from '../../../../shared/services/alerts-custom';
+import { HttpErrors } from '../../../../shared/models/http-erros';
 import { capitalizeAllWords } from '../../../../shared/utils/capitalize';
 import { CoreStorage } from '../../../../core/services/core-storage/core-storage';
 import { EnumStorage } from '../../../../core/models/storage.model';
@@ -40,7 +40,7 @@ const VALIDATOR = [
 export class Register implements OnInit {
   private readonly _fb$ = inject(FormBuilder);
   private readonly _router$ = inject(Router);
-  private readonly _toast$ = inject(Toast);
+  private readonly _alertsCustom$ = inject(AlertsCustom);
   private readonly _auth$ = inject(Auth);
   private readonly _storage$ = inject(CoreStorage);
 
@@ -105,7 +105,7 @@ export class Register implements OnInit {
       .pipe(finalize(() => this._loadingRegister$.set(false)))
       .subscribe({
         next: (data) => {
-          this._toast$.toast({ severity: 'success', summary: 'Exito', detail: 'Registro exitoso' });
+          this._alertsCustom$.toast({ severity: 'success', summary: 'Exito', detail: 'Registro exitoso' });
           this._formRegister$.reset();
 
           this._storage$.setItem(EnumStorage.CONFIRM_ACCOUNT, data.tokenConfirm);
@@ -118,14 +118,14 @@ export class Register implements OnInit {
             return;
           }
 
-          const errors = error.error as HttepErrors;
+          const errors = error.error as HttpErrors;
           if (error.status === 400) {
             const message = errors.error.message;
             const detail = Array.isArray(message) ? message.join('\n') : message;
-            this._toast$.toast({ severity: 'error', summary: 'Error', detail: detail });
+            this._alertsCustom$.toast({ severity: 'error', summary: 'Error', detail: detail });
           } else if (error.status === 409) {
             const message = String(errors.error.message);
-            this._toast$.toast({ severity: 'warn', summary: 'Error', detail: message });
+            this._alertsCustom$.toast({ severity: 'warn', summary: 'Error', detail: message });
           }
         },
       });

@@ -3,14 +3,12 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
 
-import { environment } from '../../../../environments/environment';
 import { CoreStorage } from '../../services/core-storage/core-storage';
 import { EnumStorage } from '../../models/storage.model';
 import { LoggedInUser } from '../../services/logged-in-user/logged-in-user';
-import { Toast } from '../../../shared/services/toast';
+import { AlertsCustom } from '../../../shared/services/alerts-custom';
 
 export const headersInterceptor: HttpInterceptorFn = (req, next) => {
-  const baseUrl = environment.urlBase;
   const url = req.url;
 
   // TODO: is endpoint auth
@@ -25,11 +23,11 @@ export const headersInterceptor: HttpInterceptorFn = (req, next) => {
 };
 
 const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const baseUrl = environment.urlBase;
   const url = req.url;
 
   // TODO: is not confirm account endpoint
-  if (url !== `${baseUrl}/auth/confirm` && url !== `${baseUrl}/auth/resend-confirmation-token`) return next(req);
+  if (['auth/confirm', 'auth/resend-confirmation-token'].includes(url)) return next(req);
+  //if (url !== `${baseUrl}/auth/confirm` && url !== `${baseUrl}/auth/resend-confirmation-token`) return next(req);
 
   const _loggedInUser$ = inject(LoggedInUser);
   const tokenConfirm = _loggedInUser$.isValidJwtToken(EnumStorage.CONFIRM_ACCOUNT);
@@ -37,8 +35,8 @@ const authInterceptor: HttpInterceptorFn = (req, next) => {
   // valid token confirm account
   if (tokenConfirm == false) {
     const _router$ = inject(Router);
-    const _toast$ = inject(Toast);
-    _toast$.toast({ severity: 'warn', summary: 'Advertencia', detail: 'Se ha expirado la confirmación' });
+    const _alertsCustom$ = inject(AlertsCustom);
+    _alertsCustom$.toast({ severity: 'warn', summary: 'Advertencia', detail: 'Se ha expirado la confirmación' });
     _router$.navigateByUrl('/auth');
     return EMPTY;
   }

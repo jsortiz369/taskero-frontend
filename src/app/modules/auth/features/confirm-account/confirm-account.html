@@ -3,7 +3,7 @@
     <p class="text-(--p-surface-500) dark:text-(--p-surface-300) text-lg">Hemos enviado un código de verificación de 6 dígitos.</p>
 </div>
 
-<form class="flex flex-wrap -mx-2" autocomplete="off" [formGroup]="_formConfirm$" (ngSubmit)="comfirmAccount()">
+<form class="flex flex-wrap -mx-2" autocomplete="off" [formGroup]="_formConfirm$" (ngSubmit)="onSubmit()">
     <div class="w-full px-2 mb-3">
         <div class="flex flex-wrap -mx-2">
             <p-inputotp
@@ -24,7 +24,7 @@
             iconPos="right"
             fluid
             [loading]="_loadingConfirm$()"
-            [disabled]="!_formConfirm$.valid"
+            [disabled]="!_formConfirm$.valid || _disabledConfirm$()"
         />
     </div>
 

@@ -4,10 +4,12 @@ import { map, Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { RegisterForm, ResponseRegister, ResponseRegisterConflict } from '../models/register';
-import { registerSchema, registerConflictSchema } from '../schemas/register.schemas';
+import { registerSchema, registerConflictSchema } from '../schemas/register';
 import { LoginForm, ResponseLogin } from '../models/login';
-import { loginSchema, validLoginSchema } from '../schemas/login.schema';
-import { ResponseConfirm } from '../models/confirm';
+import { loginSchema, validLoginSchema } from '../schemas/login';
+import { ResponseConfirm, ResponseResend } from '../models/confirm';
+import { messageSchema, successSchema } from '../schemas/generality';
+import { ResponseRecoverPassword } from '../models/recover-password';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +50,11 @@ export class Auth {
     return this._http$.post(`${this._urlBase$}/auth/confirm`, { otp: token }).pipe(map((res) => loginSchema.parse(res)));
   }
 
-  resendConfirmationToken() {
-    return this._http$.post(`${this._urlBase$}/auth/resend-confirmation-token`, {});
+  resendConfirmationToken(): Observable<ResponseResend> {
+    return this._http$.post(`${this._urlBase$}/auth/resend-confirmation-token`, {}).pipe(map((res) => successSchema.parse(res)));
+  }
+
+  recoverPassword(username: string): Observable<ResponseRecoverPassword> {
+    return this._http$.post(`${this._urlBase$}/auth/recover-password`, { username }).pipe(map((res) => messageSchema.parse(res)));
   }
 }
